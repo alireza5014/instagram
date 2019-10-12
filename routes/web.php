@@ -32,6 +32,7 @@ Route::group(['prefix' => '/user'], function () {
 
         Route::get('/post/list', 'User\PostController@list')->name('user.post.list');
         Route::get('/post/new', 'User\PostController@new')->name('user.post.new');
+        Route::post('/post/create', 'User\PostController@create')->name('user.post.create');
 
 
     });

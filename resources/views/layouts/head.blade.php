@@ -7,6 +7,7 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
     <link rel="stylesheet" href="{{url('gelr/css/bootstrap.min.css')}}" >
+
     <link rel="stylesheet" href="{{url('gelr/css/style.css')}}">
     <link href="{{url('gelr/css/owl.carousel.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{url('gelr/css/owl.theme.default.min.css')}}" rel="stylesheet" type="text/css">

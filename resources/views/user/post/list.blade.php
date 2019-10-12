@@ -17,17 +17,17 @@
             <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card_title">جدول محصولات</h4>
+                        <h4 class="card_title">  لیست بلاگ ها</h4>
                         <div class="single-table">
                             <div class="table-responsive">
                                 <table class="table table-hover progress-table text-center">
                                     <thead class="text-uppercase">
                                     <tr>
                                         <th scope="col">وضعیت</th>
-                                        <th scope="col">مشتری</th>
-                                        <th scope="col">محصول</th>
-                                        <th scope="col">تاریخ</th>
-                                        <th scope="col">قیمت</th>
+                                        <th scope="col">عنوان</th>
+                                        <th scope="col">چکیده</th>
+
+
                                         <th scope="col">اقدام</th>
                                     </tr>
                                     </thead>

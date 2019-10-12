@@ -2,8 +2,10 @@
 <html class="no-js" lang="zxx">
 
 <head>
-         @include('layouts.head')
+    <meta name="csrf-token" content="{{csrf_token()}}">
+    <script src="{{url('gelr/js/jquery.min.js')}}"></script>
 
+    @include('layouts.head')
 
 
 </head>
@@ -30,6 +32,6 @@
 
 @include('layouts.foot')
 
- </body>
+</body>
 
 </html>

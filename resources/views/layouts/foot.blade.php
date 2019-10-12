@@ -1,8 +1,7 @@
 @section('foot')
 
     <!-- Jquery Js -->
-<script src="{{url('gelr/js/jquery.min.js')}}"></script>
-<!-- bootstrap 4 js -->
+ <!-- bootstrap 4 js -->
 <script src="{{url('gelr/js/popper.min.js')}}"></script>
 <script src="{{url('gelr/js/bootstrap.min.js')}}"></script>
 <!-- Owl Carousel Js -->

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
+    protected $fillable=['category_id','slug','title','user_id','abstract','image_path','content','publish'];
     public function getCreatedAtAttribute($value)
     {
         if ($value)

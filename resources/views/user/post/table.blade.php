@@ -1,16 +1,19 @@
 @foreach($posts as $post)
     <tr>
         <td class="d-flex align-items-center justify-content-center">
-            <span class="dot_vz dot_vz_success"></span>
+
             <div class="text-left">
-                <div class="text-success">تکمیل شده</div>
-                <div class="text-dark">23 دی 1398</div>
+                <div class="text-success">{{$post->publish}}</div>
+                 <div class="text-dark"><i class="fa fa-heart mr-2"></i> {{$post->likes_count}}     </div>
+                <div class="text-dark"><i class="fa fa-comment mr-2"></i>  {{$post->comments_count}}     </div>
+                <div class="text-dark"><i class="fa fa-eye mr-2"></i>  {{$post->views_count}}     </div>
+                <div class="text-dark"><i class="fa fa-clock-o mr-2"> </i> {{$post->created_at}}     </div>
+
             </div>
         </td>
         <td>{{$post->title}}</td>
-        <td>آیپد لنوو 310</td>
-        <td>14-06-2019</td>
-        <td>50000تومان</td>
+        <td>{{$post->abstract}}   </td>
+
         <td>
             <ul class="d-flex justify-content-center">
                 <li class="mr-3">
