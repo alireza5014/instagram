@@ -4,7 +4,7 @@
 
     @parent
 
-    <title> اضافه کردن مطلب جدید </title>
+    <title> ویرایش مطلب   </title>
 
 
 
@@ -36,8 +36,9 @@
 
     <div class="vz_main_content">
 
-        <form method="POST" id="new_post" enctype="multipart/form-data">
+        <form method="POST" id="edit_post" enctype="multipart/form-data">
             @csrf
+            <input name="id" value="{{$post->id}}">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -51,7 +52,7 @@
                                     <label for="validationTooltip01"> عنوان</label>
                                     <input name="title" type="text" class="form-control" id="validationTooltip01"
                                            placeholder="عنوان  "
-                                           value="" required="">
+                                           value="{{$post->title}}" required="">
                                     <div class="valid-tooltip">
                                         به نظر خوب میاد!
                                     </div>
@@ -60,7 +61,7 @@
                                     <label for="validationTooltip02">چکیده </label>
                                     <input name="abstract" type="text" class="form-control" id="validationTooltip02"
                                            placeholder="  چکیده"
-                                           value="" required="">
+                                           value="{{$post->abstract}}" required="">
                                     <div class="valid-tooltip">
                                         به نظر خوب میاد!
                                     </div>
@@ -69,7 +70,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card_title">مطلب</h4>
-                                            <textarea name="content" class="summer_note_editor"></textarea>
+                                            <textarea name="content" class="summer_note_editor">{{$post->content}}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +80,7 @@
                         <div class="col-md-3">
                             <div class="card ">
                                 <div id="form_image_preview" class="card-body text-center">
-                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
+                                    <img src="{{url($post->image_path)}}" alt="Image" class="img-responsive">
                                 </div>
                             </div>
                             <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>
@@ -102,16 +103,14 @@
                                           data-role="tagsinput" class="form-control"></textarea>
                             </div>
 
-
-
                         </div>
 
 
                         <div class="col-lg-12 mr-4 ml-4">
 
-                            <button type="button" id="new_post_btn" class="btn btn-primary ladda-button ladda_btn"
+                            <button type="button" id="edit_post_btn" class="btn btn-primary ladda-button ladda_btn"
                                     data-style="expand-right">
-                                <span class="ladda-label">ایجاد پست جدید</span>
+                                <span class="ladda-label">  ویرایش  </span>
                                 <span class="ladda-spinner"></span></button>
                         </div>
                     </div>
@@ -149,11 +148,11 @@
     <script src="script.js"></script>
     <!-- Ladda Button init Js -->
     <script>
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        // var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
 
         jQuery(document).ready(function () {
-            $("#new_post_btn").on("click", function (t) {
+            $("#edit_post_btn").on("click", function (t) {
 
                 var e = t.currentTarget,
                     a = Ladda.create(e);
@@ -161,25 +160,15 @@
                 a.start();
 
                 $.ajax({
-                    url: 'create',
+                    url: 'modify',
                     method: 'POST',
-                    data: $('#new_post').serialize(),
+                    data: $('#edit_post').serialize(),
                     success: function (data, textStatus, jqXHR) {
                         if (textStatus === 'success') {
                             toastr.success(data.status + "اطلاعات با موفقیت ثبت شد", "", {
                                 progressBar: !0
                             });
 
-                            $(".summer_note_editor").summernote("reset");
-
-
-                            $('#keywords').tagsinput({
-                                trimValue: true
-                            });
-                            $('#keywords').tagsinput('removeAll');
-
-                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
-                            $('#new_post')[0].reset();
                         }
 
 

@@ -1,5 +1,7 @@
 @foreach($posts as $post)
     <tr>
+        <td><img class="img-thumbnail img-responsive" src="{{url($post->image_path)}}" width="100px" /> </td>
+
         <td class="d-flex align-items-center justify-content-center">
 
             <div class="text-left">
@@ -17,8 +19,8 @@
         <td>
             <ul class="d-flex justify-content-center">
                 <li class="mr-3">
-                    <button type="button" class="btn btn-inverse-secondary"><i
-                                class="fa fa-edit"></i></button>
+                    <a href="{{route('user.post.edit',['id'=>$post->id])}}" class="btn btn-inverse-secondary"><i
+                                class="fa fa-edit"></i></a>
                 </li>
                 <li>
                     <button type="button" class="btn btn-inverse-danger"><i
