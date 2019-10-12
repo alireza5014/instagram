@@ -1174,7 +1174,8 @@ blockquote {
   margin-right: 126px; }
 
 .vz_navbar.navbar-collapsed:hover {
-  width: 350px !important; }
+  /*width: 350px !important;*/
+}
 
 .vz_navbar.navbar-collapsed:hover .header-logo {
   width: 350px; }

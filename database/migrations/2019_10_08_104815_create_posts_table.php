@@ -34,6 +34,7 @@ class CreatePostsTable extends Migration
 
             $table->string('slug');
             $table->string('title');
+            $table->text('abstract');
             $table->string('image_path');
             $table->text('content');
 

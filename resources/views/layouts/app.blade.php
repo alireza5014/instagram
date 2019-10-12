@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-@include('layouts.head')
+
+<head>
+         @include('layouts.head')
+
+
+
+</head>
 
 
 <body>
@@ -24,7 +30,6 @@
 
 @include('layouts.foot')
 
-
-</body>
+ </body>
 
 </html>

@@ -11,10 +11,28 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['prefix' => '/user'], function () {
+
+
+    Route::group(['middleware' => 'auth:user'], function () {
+
+
+        Route::get('/home', 'User\UserController@home')->name('user.home');
+
+
+        Route::get('/post/list', 'User\PostController@list')->name('user.post.list');
+        Route::get('/post/new', 'User\PostController@new')->name('user.post.new');
+
+
+    });
+});

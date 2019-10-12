@@ -245,9 +245,13 @@
                          End Profile Menu
                 *====================================-->
                 <li class="nav-item d_none_sm">
-                    <a class="nav-link logout_link" href="login.html">
-                        خروج <i class="feather ft-power"></i>
-                    </a>
+
+                    <form method="post" action="{{route('logout')}}">
+                        <button type="submit" class="nav-link logout_link" >
+                            @csrf
+                            خروج <i class="feather ft-power"></i>
+                        </button>
+                    </form>
                 </li>
             </ul>
             <!--=========================*

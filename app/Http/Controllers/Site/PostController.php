@@ -24,7 +24,7 @@ class PostController extends Controller
     private function getPost($category_slug, $limit)
     {
         $category = Category::where('slug', $category_slug)->with(['posts' => function ($q) use ($limit) {
-        return $q->select('content as abstract_content','content', 'category_id', 'slug', 'id', 'title', 'image_path', 'created_at')->orderBy('id', 'DESC')->limit($limit)->with('metas')->get();
+        return $q->select('abstract as abstract_content','content', 'category_id', 'slug', 'id', 'title', 'image_path', 'created_at')->orderBy('id', 'DESC')->limit($limit)->with('metas')->get();
 
 
 

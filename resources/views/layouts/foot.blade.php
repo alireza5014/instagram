@@ -43,4 +43,6 @@
 <script src="{{url('gelr/js/perfect-scrollbar.min.js')}}"></script>
 <!-- Main Js -->
 <script src="{{url('gelr/js/main.js')}}"></script>
+
+
 @show
