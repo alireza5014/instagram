@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostModifyRequest;
 use App\Http\Requests\PostRequest;
+use App\Model\Category;
 use App\Model\Meta;
 use App\Model\Post;
 use Illuminate\Http\Request;
@@ -25,9 +26,14 @@ class PostController extends Controller
 
 
         if ($category_id) {
-            $posts = $posts->where('category_id', $category_id);
+            $posts = $posts->where('category_id', $category_id)
+
+                ->whereHas('category', function ($q) use ($category_id) {
+                    return $q->where('id', $category_id);
+                });
         }
-        $posts = $posts->paginate(20);
+         $posts = $posts->paginate(20);
+
 
         if ($request->ajax()) {
             try {
@@ -40,16 +46,27 @@ class PostController extends Controller
 
     public function new()
     {
-        return view('user.post.new');
+
+        $categories=Category::get();
+
+        return view('user.post.new',compact('categories'));
 
     }
 
     public function edit($id)
     {
-      return   $post = Post::where('user_id', getUser('id'))->with(['metas'=>function($q){
-          return $q->select('post_id','key','value');
-      }])->find($id);
-        return view('user.post.edit', compact('post'));
+        $categories=Category::get();
+
+        $post = Post::where('user_id', getUser('id'))->with(['metas' => function ($q) {
+            return $q->select('post_id', 'key', 'value');
+
+        }])->find($id);
+
+        foreach ($post->metas as $_meta) {
+            $meta[$_meta->key] = $_meta->value;
+        }
+
+        return view('user.post.edit', compact('post', 'meta','categories'));
 
     }
 
@@ -71,7 +88,7 @@ class PostController extends Controller
                 $my_image = ['image_path' => $image['image_path'][0]];
             }
             $post = Post::create(array_merge($my_image, [
-                'category_id' => 2,
+                'category_id' => $request->category_id,
                 'user_id' => getUser('id'),
                 'title' => $request->title,
                 'slug' => str_replace(' ', '-', $request->title),
@@ -112,17 +129,20 @@ class PostController extends Controller
                 $my_image = ['image_path' => $image['image_path'][0]];
             }
             Post::where('id', $request->id)->where('user_id', getUser('id'))->update(array_merge($my_image, [
-                'category_id' => 2,
+                'category_id' => $request->category_id,
+
                 'title' => $request->title,
                 'slug' => str_replace(' ', '-', $request->title),
                 'abstract' => $request->abstract,
                 'content' => $request['content'],
             ]));
-            Meta::where('post_id' , $request->id)->where('key' , "keywords")->update([
+
+
+            Meta::where('post_id', $request->id)->where('key', "keywords")->update([
 
                 'value' => $request->keywords
             ]);
-            Meta::where('post_id' , $request->id)->where('key' , "description")->update([
+            Meta::where('post_id', $request->id)->where('key', "description")->update([
 
                 'value' => $request->description
             ]);
