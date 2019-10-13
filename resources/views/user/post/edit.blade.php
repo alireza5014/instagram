@@ -38,7 +38,7 @@
 
         <form method="POST" id="edit_post" enctype="multipart/form-data">
             @csrf
-            <input name="id" value="{{$post->id}}">
+            <input name="id"  type="hidden" value="{{$post->id}}">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -90,17 +90,28 @@
                                 $('#form_image_preview').simpleCropper(500, 300, 200, 200);
                             </script>
 
+                            <div class="form-group">
+                                <label for="keywords">   مجموعه :</label><br/>
+                                <select id="category_id" name="category_id"
+                                        class="form-control">
+                                    @foreach($categories as $category)
+                                        <option @if($post->category_id==$category->id)  selected @endif value="{{$category->id}}">{{$category->title}}</option>
 
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="keywords">کلمات کلید :</label><br/>
-                                <input type="text" id="keywords" name="keywords" value=""
+
+
+                                <input type="text" id="keywords" name="keywords" value="{{$meta['keywords']}}"
                                        data-role="tagsinput" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label for="description">  توضیحات متا :</label><br/>
                                 <textarea type="text" id="description" name="description"
-                                          data-role="tagsinput" class="form-control"></textarea>
+                                          data-role="tagsinput" class="form-control">{{$meta['description']}}</textarea>
                             </div>
 
                         </div>

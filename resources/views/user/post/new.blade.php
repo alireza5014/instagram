@@ -5,26 +5,14 @@
     @parent
 
     <title> اضافه کردن مطلب جدید </title>
-
-
-
-
     <link rel="stylesheet" href="{{url('gelr/vendors/summernote/dist/summernote-bs4.css')}}">
     <link rel="stylesheet" href="{{url('gelr/vendors/ladda-button/css/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="{{url('gelr/vendors/toastr/css/toastr.min.css')}}">
-
-
-
     <link rel="stylesheet" type="text/css" href="{{url('crop/css/style.css')}}"/>
     {{--    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style-example.css')}}"/>--}}
     <link rel="stylesheet" type="text/css" href="{{url('crop/css/jquery.Jcrop.css')}}"/>
-
     <script type="text/javascript" src="{{url('crop/scripts/jquery.Jcrop.js')}}"></script>
     <script type="text/javascript" src="{{url('crop/scripts/jquery.SimpleCropper.js')}}"></script>
-
-
-
-
     {{--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>--}}
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css'>
 
@@ -77,6 +65,13 @@
 
                         </div>
                         <div class="col-md-3">
+
+
+
+
+
+
+
                             <div class="card ">
                                 <div id="form_image_preview" class="card-body text-center">
                                     <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
@@ -91,29 +86,40 @@
 
 
                             <div class="form-group">
+                                <label for="keywords">   مجموعه :</label><br/>
+                                <select id="category_id" name="category_id"
+                                        class="form-control">
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->title}}</option>
+
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="keywords">کلمات کلید :</label><br/>
                                 <input type="text" id="keywords" name="keywords" value=""
                                        data-role="tagsinput" class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label for="description">  توضیحات متا :</label><br/>
+                                <label for="description"> توضیحات متا :</label><br/>
                                 <textarea type="text" id="description" name="description"
                                           data-role="tagsinput" class="form-control"></textarea>
                             </div>
 
 
-
                         </div>
 
 
-                        <div class="col-lg-12 mr-4 ml-4">
+                        <div class="col-lg-6 mr-4 ml-4">
 
-                            <button type="button" id="new_post_btn" class="btn btn-primary ladda-button ladda_btn"
+                            <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4"
                                     data-style="expand-right">
-                                <span class="ladda-label">ایجاد پست جدید</span>
+                                <span class="ladda-label">ایجاد    </span>
                                 <span class="ladda-spinner"></span></button>
                         </div>
+
                     </div>
 
                 </div>

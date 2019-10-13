@@ -37,5 +37,10 @@ Route::group(['prefix' => '/user'], function () {
         Route::post('/post/edit/modify', 'User\PostController@modify')->name('user.post.modify');
 
 
+
+
+        Route::get('/slider/list', 'User\SliderController@list')->name('user.slider.list');
+        Route::post('/slider/create', 'User\SliderController@create')->name('user.slider.create');
+
     });
 });
