@@ -17,12 +17,13 @@
             <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card_title">  لیست بلاگ ها</h4>
+                        <h4 class="card_title">  لیست   @if($posts[0]){{$posts[0]->category->title}}@endif</h4>
                         <div class="single-table">
                             <div class="table-responsive">
                                 <table class="table table-hover progress-table text-center">
                                     <thead class="text-uppercase">
                                     <tr>
+                                        <th scope="col">تصویر</th>
                                         <th scope="col">وضعیت</th>
                                         <th scope="col">عنوان</th>
                                         <th scope="col">چکیده</th>

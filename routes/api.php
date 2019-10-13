@@ -17,6 +17,10 @@ use Illuminate\Http\Request;
 Route::group(['namespace'=>'Site', 'middleware' => ['origin']], function () {
 
     Route::any('/blog', "PostController@getBlog");
+    Route::any('/slider', "SliderController@getSlider");
+
+
+
     Route::any('/tariffe', "TariffeController@getTariffe");
     Route::any('/about_us', "PostController@about_us");
     Route::any('/contact_us', "PostController@contact_us");
