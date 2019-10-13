@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2493bda-80f4-421b-9d6d-a7e23ded360e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/user/slider/list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Origin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Origin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Slider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Slider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/post/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/post/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/post/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/post/list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user/post/new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/post/new.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Site/SliderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Site/SliderController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,8 +46,8 @@
       <file leaf-file-name="SliderController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Site/SliderController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+            <state relative-caret-position="435">
+              <caret line="29" column="2" selection-start-line="29" selection-start-column="2" selection-end-line="29" selection-end-column="2" />
               <folding>
                 <element signature="e#45#66#0#PHP" expanded="true" />
               </folding>
@@ -487,12 +475,12 @@
       <workItem from="1570529085008" duration="9808000" />
       <workItem from="1570601896597" duration="20406000" />
       <workItem from="1570861936196" duration="19270000" />
-      <workItem from="1570896698896" duration="10561000" />
+      <workItem from="1570896698896" duration="10613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60323000" />
+    <option name="totallyTimeSpent" value="60375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -505,8 +493,8 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49946696" visible="true" weight="0.2262069" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16639742" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49946696" visible="true" weight="0.2262069" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16639742" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -852,8 +840,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Site/SliderController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+        <state relative-caret-position="435">
+          <caret line="29" column="2" selection-start-line="29" selection-start-column="2" selection-end-line="29" selection-end-column="2" />
           <folding>
             <element signature="e#45#66#0#PHP" expanded="true" />
           </folding>
