@@ -23,11 +23,11 @@
                             <li class="nav-item menu_title">
                                 <label>نرخ ها  </label>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new')}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال تصویر جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال گالری جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال ویدیو جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال استوری جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال لایو جدید</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new',['type'=>'photo'])}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال تصویر جدید</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new',['type'=>'album'])}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال گالری جدید</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new',['type'=>'video'])}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال ویدیو جدید</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new',['type'=>'story'])}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال استوری جدید</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new',['type'=>'live'])}}"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال لایو جدید</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="{{route('user.post.list')}}"><i class="menu_icon ti-layout-cta-left"></i> <span>لیست محتوا </span></a></li>
 
                         </ul>

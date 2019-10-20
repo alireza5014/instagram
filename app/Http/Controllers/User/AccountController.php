@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\AccountCreateRequest;
 use App\Model\Account;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Mockery\Exception;
 
 class AccountController extends Controller
 {
@@ -12,12 +14,11 @@ class AccountController extends Controller
     {
 
 
-
         $accounts = Account::where('user_id', getUser('id'))->get();
 
         try {
 
-            $ig = new \InstagramAPI\Instagram(false, false);
+            $ig = new \InstagramAPI\Instagram();
 
             foreach ($accounts as $account) {
 
@@ -50,5 +51,31 @@ class AccountController extends Controller
         }
 
         return view('user.account.list', compact('accounts'));
+    }
+
+    public function create(AccountCreateRequest $request)
+    {
+        try {
+            $ig = new \InstagramAPI\Instagram();
+            $ig->login($request->username, $request->password);
+            $instagram = $ig->account->getCurrentUser()->getUser();
+
+          $account=  Account::create([
+                'user_id' => getUser('id'),
+                'pk' => $instagram->getPk(),
+                'username' => $instagram->getUsername(),
+                'password' => $request->password,
+                'full_name' => $instagram->getFullName(),
+                'is_private' => $instagram->getIsPrivate(),
+                'profile_pic_url' => $instagram->getProfilePicUrl(),
+                'biography' => $instagram->getBiography(),
+                'external_url' => $instagram->getExternalLynxUrl(),
+                'phone_number' => $instagram->getPhoneNumber(),
+            ]);
+        } catch (Exception $exception) {
+            return response()->json(['status' => 0]);
+        }
+        return response()->json(['status' => 1,'data'=>$account]);
+
     }
 }

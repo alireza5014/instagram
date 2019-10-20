@@ -14,7 +14,7 @@
     <script type="text/javascript" src="{{url('crop/scripts/jquery.Jcrop.js')}}"></script>
     <script type="text/javascript" src="{{url('crop/scripts/jquery.SimpleCropper.js')}}"></script>
     {{--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>--}}
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css'>
+    <link rel='stylesheet' href='{{url('gelr/css/bootstrap-tagsinput.css')}}'>
 
 
 
@@ -45,8 +45,17 @@
                                 <div class="col-lg-12 mt-4 mb-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="caption">کپشن</h4>
+
+                                            <label for="caption">   کپشن   :</label><br/>
+
                                             <textarea name="caption" class="form-control" rows="8"></textarea>
+
+                                            <div class="form-group mt-3">
+                                                <label for="tags">   تگ ها :</label><br/>
+
+                                                <input style="width: 100%" type="text" id="tags" name="tags" value=""
+                                                       data-role="tagsinput" class="form-control"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,9 +105,9 @@
                             </div>
 
 
-                            <div class="col-lg-6 mr-4 ml-4">
+                            <div class="col-lg-12 mr-4 ml-4">
 
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4"
+                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
                                         data-style="expand-right">
                                     <span class="ladda-label">ایجاد    </span>
                                     <span class="ladda-spinner"></span></button>
@@ -170,6 +179,7 @@
 
                             $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
                             $('#new_post')[0].reset();
+                            $("#tags").tagsinput('removeAll');
                         }
 
 

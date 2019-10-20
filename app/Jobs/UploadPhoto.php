@@ -44,7 +44,8 @@ class UploadPhoto implements ShouldQueue
 //////////////////////
 /////// MEDIA ////////
         $photoFilename =public_path($this->post->file);
-        $captionText = $this->post->caption;
+        $captionText = $this->post->caption." ".str_replace(',','#',$this->post->tags);
+
 //////////////////////
         $ig = new \InstagramAPI\Instagram();
         try {
