@@ -1,14 +1,14 @@
 
 
 
-<nav class="vz_navbar navbar-collapsed">
+<nav class="vz_navbar ">
     <div class="navbar-wrapper">
         <div class="navbar-content scroll-div">
             <div class="vz_navigation">
                 <ul class="sidebar nav flex-column">
-                    <li class="active"><a class="nav-link text-center"  data-nav="dashboard"><i class="feather ft-home"></i><span>داشبورد</span></a></li>
+                    <li class="active"><a class="nav-link text-center"   ><i class="feather ft-home"></i><span>داشبورد</span></a></li>
 
-                    <li><a class="nav-link text-center" data-nav="ui_features"><i class="feather ft-gitlab"></i><span> اکانت ها </span></a></li>
+                    <li><a class="nav-link text-center" href="{{route('user.account.list')}}"  ><i class="feather ft-gitlab"></i><span> اکانت ها </span></a></li>
                      <li><a class="nav-link text-center"  data-nav="advance_kit"><i class="feather ft-zap"></i><span>  ارسال محتوا   </span></a></li>
                     <li><a class="nav-link text-center"   data-nav="forms"><i class="feather ft-clipboard"></i><span> تجهیزات</span></a></li>
                     <li><a class="nav-link text-center"   data-nav="maps"><i class="feather ft-map-pin"></i><span>   خدمات </span></a></li>
@@ -17,33 +17,7 @@
                 </ul>
 
                 <div class="sidebar_content">
-                    <div class="vz_sidebar_link dashboard active">
-                        <ul class="nav vz_inner_nav">
-                            <li class="nav-item menu_title">
-                                <label>نسخه ها</label>
-                            </li>
-                            <li class="nav-item active">
-                                <a href="index.html" class="nav-link"><i class="feather ft-activity mr-2"></i>داشبورد 1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index2.html" class="nav-link"><i class="feather ft-anchor mr-2"></i>داشبورد 2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index3.html" class="nav-link"><i class="feather ft-aperture mr-2"></i>داشبورد 3</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="vz_sidebar_link ui_features">
-                        <ul class="nav vz_inner_nav">
-                            <li class="nav-item menu_title">
-                                <label>  اکانت ها </label>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.new')}}"><i class="menu_icon ti-alert"></i><span>ایجاد اکانت جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{route('user.account.list')}}"><i class="menu_icon ti-alert"></i><span>  لیست اکانت ها  </span></a></li>
 
-                        </ul>
-
-                    </div>
                     <div class="vz_sidebar_link advance_kit">
                         <ul class="nav vz_inner_nav">
                             <li class="nav-item menu_title">
