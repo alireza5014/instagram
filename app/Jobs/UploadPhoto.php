@@ -31,7 +31,6 @@ class UploadPhoto implements ShouldQueue
      */
     public function handle()
     {
-     file_put_contents("job".$this->post->id.".txt","ooo".$this->post);
 
    $account=  Account::where('id',$this->post->account_id)->first();
 
@@ -44,7 +43,7 @@ class UploadPhoto implements ShouldQueue
         $password=$account->password;
 //////////////////////
 /////// MEDIA ////////
-        $photoFilename = $this->post->file;
+        $photoFilename =public_path($this->post->file);
         $captionText = $this->post->caption;
 //////////////////////
         $ig = new \InstagramAPI\Instagram();

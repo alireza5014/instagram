@@ -54,7 +54,7 @@
                             <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال ویدیو جدید</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال استوری جدید</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>ارسال لایو جدید</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="toastr.html"><i class="menu_icon ti-layout-cta-left"></i> <span>لیست محتوا </span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('user.post.list')}}"><i class="menu_icon ti-layout-cta-left"></i> <span>لیست محتوا </span></a></li>
 
                         </ul>
                     </div>

@@ -1,32 +1,39 @@
 @foreach($posts as $post)
-    <tr>
-        <td><img class="img-thumbnail img-responsive" src="{{url($post->image_path)}}" width="100px" /> </td>
 
-        <td class="d-flex align-items-center justify-content-center">
 
-            <div class="text-left">
-                <div class="text-success">{{$post->publish}}</div>
-                 <div class="text-dark"><i class="fa fa-heart mr-2"></i> {{$post->likes_count}}     </div>
-                <div class="text-dark"><i class="fa fa-comment mr-2"></i>  {{$post->comments_count}}     </div>
-                <div class="text-dark"><i class="fa fa-eye mr-2"></i>  {{$post->views_count}}     </div>
-                <div class="text-dark"><i class="fa fa-clock-o mr-2"> </i> {{$post->created_at}}     </div>
 
-            </div>
-        </td>
-        <td>{{$post->title}}</td>
-        <td>{{$post->abstract}}   </td>
+    <div class="col-lg-3 col-md-4 mb-2 col-sm-12 grid-item">
+        <figure class="article_card">
+            <div class="image"><img src="{{url($post->file)}}" alt="Post Image"></div>
+            <figcaption>
+                <h5>{{$post->category->title}}</h5>
 
-        <td>
-            <ul class="d-flex justify-content-center">
-                <li class="mr-3">
-                    <a href="{{route('user.post.edit',['id'=>$post->id])}}" class="btn btn-inverse-secondary"><i
-                                class="fa fa-edit"></i></a>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-inverse-danger"><i
-                                class="ti-trash"></i></button>
-                </li>
+                    <a href="javascript:void(0)">
+                        هر چیز زیبایی دارد، فقط همه ی آدم ها آن را نمی بینند
+                    </a>
+<hr/>
+
+            <ul class="list-inline">
+                <li class="list-inline-item"><img src="{{url($post->account->profile_pic_url)}}" style="width: 30px;"  /></li>
+                <li class="list-inline-item">{{$post->account->username}}</li>
+
             </ul>
-        </td>
-    </tr>
+
+
+
+
+
+                <footer>
+                    <div class="date">   {{$post->created_at}}</div>
+                    <div class="icons">
+                        <a class="views"><i class="ion-android-delete btn btn-sm  btn-danger"></i>  </a>
+                        <a class="views"><i class="ion-edit btn btn-sm  btn-warning"></i> </a>
+
+                    </div>
+                </footer>
+            </figcaption>
+        </figure>
+    </div>
+
 @endforeach
+

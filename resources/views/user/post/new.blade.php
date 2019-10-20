@@ -144,6 +144,8 @@
     <script src="script.js"></script>
     <!-- Ladda Button init Js -->
     <script>
+        $('.selectpicker').selectpicker();
+
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -166,8 +168,8 @@
                             });
 
 
-                            {{--$("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")--}}
-                            {{--$('#new_post')[0].reset();--}}
+                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
+                            $('#new_post')[0].reset();
                         }
 
 
@@ -203,8 +205,7 @@
             })
         });
 
-        $('select').selectpicker();
-    </script>
+     </script>
 
 
 @endsection

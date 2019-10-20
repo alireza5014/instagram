@@ -21,10 +21,9 @@ class PostController extends Controller
     public function list($category_id = 0, Request $request)
     {
 
-        $posts = Post::with('metas')
-            ->withCount('comments')
-            ->withCount('likes')
+        $posts = Post::where('user_id',getUser('id'))
             ->with('category')
+            ->with('account')
             ->orderBy('id', 'DESC');
 
 
@@ -35,7 +34,7 @@ class PostController extends Controller
                     return $q->where('id', $category_id);
                 });
         }
-         $posts = $posts->paginate(20);
+           $posts = $posts->paginate(20);
 
 
         if ($request->ajax()) {
@@ -91,46 +90,19 @@ class PostController extends Controller
             $accounts=$request->accounts;
             for($i=0;$i<sizeof($accounts);$i++) {
                 $post=   Post::create(array_merge($my_image, [
-//                'category_id' => $request->category_id,
+                'category_id' => $request->category_id,
                     'user_id' => getUser('id'),
                     'account_id' => $accounts[$i],
-                    'type' => 1,
+
                     'sent_at' => $request->sent_at,
                     'caption' => $request->caption,
                 ]));
 
 
 
-                $account=  Account::where('id',$post->account_id)->first();
 
 
-/////// CONFIG ///////
-                $username = $account->username;
-                $password=$account->password;
-//////////////////////
-/////// MEDIA ////////
-                $photoFilename = url($post->file);
-                $captionText = $post->caption;
-//////////////////////
-                $ig = new \InstagramAPI\Instagram(true,true);
-                try {
-                    $ig->login($username, $password);
-                } catch (\Exception $e) {
-                    echo 'Something went wrong: '.$e->getMessage()."\n";
-
-                }
-                try {
-
-                    $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($photoFilename);
-                    $ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $captionText]);
-                } catch (\Exception $e) {
-
-                    file_put_contents("aaa.txt",$e->getMessage());
-
-                    echo 'Something went wrong: '.$e->getMessage()."\n";
-                }
-
-//                UploadPhoto::dispatch($post);
+         UploadPhoto::dispatch($post) ->delay(now()->addSecond(10));;
 
             }
 

@@ -32,8 +32,14 @@ Route::group(['prefix' => '/user'], function () {
 
         Route::get('/account/list', 'User\AccountController@list')->name('user.account.list');
 
+
+
+        Route::get('/post/list', 'User\PostController@list')->name('user.post.list');
         Route::get('/post/new', 'User\PostController@new')->name('user.post.new');
-        Route::get('/post/edit/{id}', 'User\PostController@edit')->name('user.post.edit');
+
+
+
+         Route::get('/post/edit/{id}', 'User\PostController@edit')->name('user.post.edit');
         Route::post('/post/create', 'User\PostController@create')->name('user.post.create');
         Route::post('/post/edit/modify', 'User\PostController@modify')->name('user.post.modify');
 
