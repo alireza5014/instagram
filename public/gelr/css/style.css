@@ -11,30 +11,6 @@ font-family: "yekan";
 src: url('../fonts/yekan.ttf') format('truetype');
 }
 
-
-
-.label {
-    display: inline;
-    padding: .2em .6em .3em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25em;
-}
-
-.label-info {
-    background-color: #5bc0de;
-}
-
-.bootstrap-tagsinput .tag {
-    margin-right: 2px;
-    color: white;
-    font-size: 10px !important;
-}
 /* 
 ======================================================================== 
 
@@ -273,10 +249,8 @@ button {
   letter-spacing: 0; }
 
 .vz_main_content {
-    margin-top: 100px;
-    padding: 40px 30px;
-    margin-right: 10px;
-}
+  margin-top: 100px;
+  padding: 40px 30px; }
 
 .vz_main_container {
   position: relative;
@@ -1200,8 +1174,7 @@ blockquote {
   margin-right: 126px; }
 
 .vz_navbar.navbar-collapsed:hover {
-  /*width: 350px !important;*/
-}
+  width: 350px !important; }
 
 .vz_navbar.navbar-collapsed:hover .header-logo {
   width: 350px; }
@@ -1298,7 +1271,6 @@ blockquote {
     display: none; }
 
   .vz_main_content {
-      margin-right: -120px !important;
     padding: 30px 15px; } }
 .vz_main_sec .menu_icon {
 	float: right;

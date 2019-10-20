@@ -23,19 +23,21 @@ class CreatePostsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('account_id')->unsigned();
 
-            $table->foreign('category_id')
+            $table->foreign('account_id')
                 ->references('id')
-                ->on('categories')
+                ->on('accounts')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
 
-            $table->string('slug');
-            $table->string('title');
-            $table->text('abstract');
-            $table->string('image_path');
+            $table->enum('type',['photo','video','album','live','story']);
+            $table->string('caption');
+
+
+            $table->timestamp('sent_at')->nullable();
+
             $table->text('content');
 
 

@@ -30,7 +30,8 @@ Route::group(['prefix' => '/user'], function () {
         Route::get('/home', 'User\UserController@home')->name('user.home');
 
 
-        Route::get('/post/list/{category_id?}', 'User\PostController@list')->name('user.post.list');
+        Route::get('/account/list', 'User\AccountController@list')->name('user.account.list');
+
         Route::get('/post/new', 'User\PostController@new')->name('user.post.new');
         Route::get('/post/edit/{id}', 'User\PostController@edit')->name('user.post.edit');
         Route::post('/post/create', 'User\PostController@create')->name('user.post.create');

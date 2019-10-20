@@ -18,14 +18,6 @@
 
 
 
-
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-
-
 @endsection
 
 @section('content')
@@ -42,11 +34,30 @@
                         <div class="col-md-9">
                             <div class="row">
 
+
+                                <div class="col-lg-3 col-md-3 mb-3">
+                                    <label for="validationTooltip01"> عنوان</label>
+                                    <input name="title" type="text" class="form-control" id="validationTooltip01"
+                                           placeholder="عنوان  "
+                                           value="" required="">
+                                    <div class="valid-tooltip">
+                                        به نظر خوب میاد!
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-md-9 mb-3">
+                                    <label for="validationTooltip02">چکیده </label>
+                                    <input name="abstract" type="text" class="form-control" id="validationTooltip02"
+                                           placeholder="  چکیده"
+                                           value="" required="">
+                                    <div class="valid-tooltip">
+                                        به نظر خوب میاد!
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 mt-4 mb-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="caption">کپشن</h4>
-                                            <textarea name="caption" class="form-control" rows="8"></textarea>
+                                            <h4 class="card_title">مطلب</h4>
+                                            <textarea name="content" class="summer_note_editor"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -54,6 +65,13 @@
 
                         </div>
                         <div class="col-md-3">
+
+
+
+
+
+
+
                             <div class="card ">
                                 <div id="form_image_preview" class="card-body text-center">
                                     <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
@@ -63,19 +81,9 @@
 
                             <script>
                                 // Init Simple Cropper
-                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);
+                                $('#form_image_preview').simpleCropper(500, 300, 200, 200);
                             </script>
 
-                            <div class="form-group">
-                                <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">
-                                    @foreach($accounts as $account)
-                                        <option value="{{$account->id}}">{{$account->username}}</option>
-
-                                    @endforeach
-
-                                </select>
-                            </div>
 
                             <div class="form-group">
                                 <label for="keywords">   مجموعه :</label><br/>
@@ -88,26 +96,29 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label for="keywords">کلمات کلید :</label><br/>
+                                <input type="text" id="keywords" name="keywords" value=""
+                                       data-role="tagsinput" class="form-control"/>
+                            </div>
 
                             <div class="form-group">
-                                <label for="keywords">   زمان ارسال :</label><br/>
-
-                               <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}"  type="text" class="form-control">
+                                <label for="description"> توضیحات متا :</label><br/>
+                                <textarea type="text" id="description" name="description"
+                                          data-role="tagsinput" class="form-control"></textarea>
                             </div>
 
-
-                            <div class="col-lg-6 mr-4 ml-4">
-
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4"
-                                        data-style="expand-right">
-                                    <span class="ladda-label">ایجاد    </span>
-                                    <span class="ladda-spinner"></span></button>
-                            </div>
 
                         </div>
 
 
+                        <div class="col-lg-6 mr-4 ml-4">
 
+                            <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4"
+                                    data-style="expand-right">
+                                <span class="ladda-label">ایجاد    </span>
+                                <span class="ladda-spinner"></span></button>
+                        </div>
 
                     </div>
 
@@ -165,9 +176,16 @@
                                 progressBar: !0
                             });
 
+                            $(".summer_note_editor").summernote("reset");
 
-                            {{--$("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")--}}
-                            {{--$('#new_post')[0].reset();--}}
+
+                            $('#keywords').tagsinput({
+                                trimValue: true
+                            });
+                            $('#keywords').tagsinput('removeAll');
+
+                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
+                            $('#new_post')[0].reset();
                         }
 
 
@@ -183,8 +201,6 @@
                                 });
                             });
                         } else {
-
-                            console.log(error.responseText)
                             toastr.error("خطا در ثبت اطلاعات", "خطا ", {
                                 progressBar: !0
                             });
@@ -203,7 +219,7 @@
             })
         });
 
-        $('select').selectpicker();
+
     </script>
 
 

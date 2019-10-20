@@ -24,12 +24,12 @@ class PostCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
-            'abstract'=>'required',
-            'content'=>'required',
+
+            'caption'=>'required',
             'main_image'=>'required',
-            'keywords'=>'required',
-            'description'=>'required',
+            'accounts'=>'required',
+            'sent_at'=>'required',
+
         ];
     }
 }

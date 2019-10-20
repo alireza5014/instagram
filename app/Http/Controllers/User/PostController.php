@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostModifyRequest;
 use App\Http\Requests\PostRequest;
+use App\Jobs\UploadPhoto;
+use App\Model\Account;
 use App\Model\Category;
 use App\Model\Meta;
 use App\Model\Post;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\Job;
 use Mockery\Exception;
 
 class PostController extends Controller
@@ -48,8 +51,8 @@ class PostController extends Controller
     {
 
         $categories=Category::get();
-
-        return view('user.post.new',compact('categories'));
+        $accounts=Account::where('user_id',getUser('id'))->get();
+        return view('user.post.new',compact('categories','accounts'));
 
     }
 
@@ -72,45 +75,73 @@ class PostController extends Controller
 
     public function create(PostCreateRequest $request)
     {
+
         try {
 
             $store_path = '/images/posts/';
-            $my_image = ['image_path' => '/images/cover.jpg'];
+            $my_image = ['file' => '/images/cover.jpg'];
             if ($request->main_image != "") {
                 $image = UpLoad::create('image')
                     ->request($request)
                     ->target('main_image')
                     ->store_path($store_path)
-//            ->watermark_path('watermark_logo.png')
-//            ->resizePercentage(80)
-//            ->resize_percent(75)
                     ->makeUpload();
-                $my_image = ['image_path' => $image['image_path'][0]];
+                $my_image = ['file' => $image['image_path'][0]];
             }
-            $post = Post::create(array_merge($my_image, [
-                'category_id' => $request->category_id,
-                'user_id' => getUser('id'),
-                'title' => $request->title,
-                'slug' => str_replace(' ', '-', $request->title),
-                'abstract' => $request->abstract,
-                'content' => $request['content'],
-            ]));
-            Meta::create([
-                'post_id' => $post->id,
-                'key' => "keywords",
-                'value' => $request->keywords,
-            ]);
+            $accounts=$request->accounts;
+            for($i=0;$i<sizeof($accounts);$i++) {
+                $post=   Post::create(array_merge($my_image, [
+//                'category_id' => $request->category_id,
+                    'user_id' => getUser('id'),
+                    'account_id' => $accounts[$i],
+                    'type' => 1,
+                    'sent_at' => $request->sent_at,
+                    'caption' => $request->caption,
+                ]));
 
-            Meta::create([
-                'post_id' => $post->id,
-                'key' => "description",
-                'value' => $request->description,
-            ]);
+
+
+                $account=  Account::where('id',$post->account_id)->first();
+
+
+/////// CONFIG ///////
+                $username = $account->username;
+                $password=$account->password;
+//////////////////////
+/////// MEDIA ////////
+                $photoFilename = url($post->file);
+                $captionText = $post->caption;
+//////////////////////
+                $ig = new \InstagramAPI\Instagram(true,true);
+                try {
+                    $ig->login($username, $password);
+                } catch (\Exception $e) {
+                    echo 'Something went wrong: '.$e->getMessage()."\n";
+
+                }
+                try {
+
+                    $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($photoFilename);
+                    $ig->timeline->uploadPhoto($photo->getFile(), ['caption' => $captionText]);
+                } catch (\Exception $e) {
+
+                    file_put_contents("aaa.txt",$e->getMessage());
+
+                    echo 'Something went wrong: '.$e->getMessage()."\n";
+                }
+
+//                UploadPhoto::dispatch($post);
+
+            }
+
+
+
         } catch (Exception $exception) {
             return response()->json(['status' => $exception->getMessage()]);
 
         }
-        return response()->json(['status' => 1]);
+
+         return response()->json(['status' => 1]);
     }
 
     public function modify(PostModifyRequest $request)
