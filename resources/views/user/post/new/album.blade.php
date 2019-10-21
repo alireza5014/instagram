@@ -19,7 +19,8 @@
 
 
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
@@ -45,13 +46,83 @@
                                 <div class="col-lg-12 mt-4 mb-4">
                                     <div class="card">
                                         <div class="card-body">
+                                            <div class="row" id="images">
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
 
-                                            <label for="caption">   کپشن   :</label><br/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>     <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>     <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>
+                                                <div class="card col-md-3 ">
+                                                    <div class="card-body text-center form_image_preview">
+                                                        <img src="{{url('images/cover.jpg')}}" alt="Image"
+                                                             class="img-responsive">
+
+                                                    </div>
+                                                </div>
+
+
+{{--                                                <div class="card col-md-3 ">--}}
+{{--                                                    <div class="card-body text-center plus-image">--}}
+{{--                                                        <img src="{{url('plus-image.png')}}" style="height: 50px;"--}}
+{{--                                                             alt="Image" class="img-responsive">--}}
+
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+
+                                            </div>
+
+
+                                            <label for="caption"> کپشن :</label><br/>
 
                                             <textarea name="caption" class="form-control" rows="8"></textarea>
 
                                             <div class="form-group mt-3">
-                                                <label for="tags">   تگ ها :</label><br/>
+                                                <label for="tags"> تگ ها :</label><br/>
 
                                                 <input style="width: 100%" type="text" id="tags" name="tags" value=""
                                                        data-role="tagsinput" class="form-control"/>
@@ -63,21 +134,15 @@
 
                         </div>
                         <div class="col-md-3">
-                            <div class="card ">
-                                <div id="form_image_preview" class="card-body text-center">
-                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
-                                </div>
-                            </div>
-                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>
-
-                            <script>
-                                // Init Simple Cropper
-                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);
-                            </script>
 
                             <div class="form-group">
+                                <label for="keywords"> نوع محتوا :</label>
+                                <span>آلبوم</span>
+                            </div>
+                            <div class="form-group">
                                 <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">
+                                <select name="accounts[]" class="selectpicker form-control" multiple
+                                        data-live-search="true">
                                     @foreach($accounts as $account)
                                         <option value="{{$account->id}}">{{$account->username}}</option>
 
@@ -86,36 +151,27 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="keywords">   مجموعه :</label><br/>
-                                <select id="category_id" name="category_id"
-                                        class="form-control">
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->title}}</option>
 
-                                    @endforeach
-                                </select>
-                            </div>
 
 
                             <div class="form-group">
-                                <label for="keywords">   زمان ارسال :</label><br/>
+                                <label for="keywords"> زمان ارسال :</label><br/>
 
-                               <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}"  type="text" class="form-control">
+                                <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}" type="text"
+                                       class="form-control">
                             </div>
 
 
                             <div class="col-lg-12 mr-4 ml-4">
 
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                <button type="button" id="new_post_btn"
+                                        class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
                                         data-style="expand-right">
                                     <span class="ladda-label">ایجاد    </span>
                                     <span class="ladda-spinner"></span></button>
                             </div>
 
                         </div>
-
-
 
 
                     </div>
@@ -159,6 +215,15 @@
 
 
         jQuery(document).ready(function () {
+            $('.form_image_preview').simpleCropper(600, 600, 200, 200);
+
+            {{--var random_class = "image_" + Math.floor(Math.random() * 99999);--}}
+            {{--$(".plus-image").on("click", function (t) {--}}
+            {{--    $('#images').prepend('<div class="card col-md-3 "> <div class="card-body text-center form_image_preview  "> <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">  </div>  </div>')--}}
+            {{--    $('.form_image_preview').simpleCropper(600, 600, 200, 200);--}}
+
+            {{--});--}}
+
             $("#new_post_btn").on("click", function (t) {
 
                 var e = t.currentTarget,
@@ -215,7 +280,7 @@
             })
         });
 
-     </script>
+    </script>
 
 
 @endsection

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('head')
+@section('header')
 
     @parent
-    <link rel="stylesheet" href="{{url('gelr/vendors/summernote/dist/summernote-bs4.css')}}">
+
 
 @endsection
 
@@ -33,6 +33,8 @@
     </div>
 
 @endsection
+<script src="{{url('gelr/js/owl.carousel.min.js')}}"></script>
+
 @section('foot')
 
     @parent

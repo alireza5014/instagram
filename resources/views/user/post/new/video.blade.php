@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="{{url('gelr/vendors/ladda-button/css/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="{{url('gelr/vendors/toastr/css/toastr.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url('crop/css/style.css')}}"/>
-    {{--    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style-example.css')}}"/>--}}
-    <link rel="stylesheet" type="text/css" href="{{url('crop/css/jquery.Jcrop.css')}}"/>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.Jcrop.js')}}"></script>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.SimpleCropper.js')}}"></script>
+
     {{--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>--}}
     <link rel='stylesheet' href='{{url('gelr/css/bootstrap-tagsinput.css')}}'>
 
@@ -63,18 +60,18 @@
 
                         </div>
                         <div class="col-md-3">
-                            <div class="card ">
-                                <div id="form_image_preview" class="card-body text-center">
-                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
-                                </div>
-                            </div>
-                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>
+{{--                            <div class="card ">--}}
+{{--                                <div id="form_image_preview" class="card-body text-center">--}}
+{{--                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>--}}
 
-                            <script>
-                                // Init Simple Cropper
-                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);
-                            </script>
-
+{{--                            <script>--}}
+{{--                                // Init Simple Cropper--}}
+{{--                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);--}}
+{{--                            </script>--}}
+<input type="file" name="video" id="video">
                             <div class="form-group">
                                 <label>اکانت ها:</label>
                                 <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">

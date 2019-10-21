@@ -223,8 +223,9 @@
             file_display_area.html('');
 
             file_display_area.append(imageFoo);
+            file_display_area.append('<textarea style="display: none   ;"   name="main_image[]">'+dataUrl+'</textarea>');
 
-            $('#main_image').val(dataUrl);
+            $(this).children('textarea').val(dataUrl);
 
             if (onComplete) onComplete(
                 {

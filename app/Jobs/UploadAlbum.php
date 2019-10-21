@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Model\Account;
+use App\Model\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,10 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class UploadAlbum implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $account_id;
-    protected $media;
-    protected $caption;
-    protected $tags;
+    protected $post;
 
 
     /**
@@ -25,10 +23,7 @@ class UploadAlbum implements ShouldQueue
      */
     public function __construct($post)
     {
-        $this->account_id=$post->account_id;
-        $this->media=$post->media;
-        $this->caption=$post->caption;
-        $this->tags=$post->tags;
+        $this->post = $post;
 
     }
 
@@ -39,37 +34,41 @@ class UploadAlbum implements ShouldQueue
      */
     public function handle()
     {
-
-        $account=  Account::where('id',$this->account_id)->first();
-
-
         set_time_limit(0);
         date_default_timezone_set('UTC');
 
-        $username = $account->username;
-        $password=$account->password;
 
-        $captionText = $this->caption." ".str_replace(',','#',$this->tags);
+        $post = $this->post;
 
 
-//////////////////////
-        $ig = new \InstagramAPI\Instagram();
+        $username = $post->account->username;
+        $password = $post->account->password;
+
+        $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
+
+
+        foreach ($post->medias as $media) {
+
+            $my_media[] = [
+                'type' => $media->type,
+                'file' => public_path($media->file), // Path to the photo file.
+            ];
+
+        }
+        $ig = new \InstagramAPI\Instagram(true, true);
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {
-            echo 'Something went wrong: '.$e->getMessage()."\n";
+            echo 'Something went wrong1: ' . $e->getMessage() . "\n";
             exit(0);
         }
-////// NORMALIZE MEDIA //////
-// All album files must have the same aspect ratio.
-// We copy the app's behavior by using the first file
-// as template for all subsequent ones.
+
         $mediaOptions = [
             'targetFeed' => \InstagramAPI\Constants::FEED_TIMELINE_ALBUM,
             // Uncomment to expand media instead of cropping it.
             //'operation' => \InstagramAPI\Media\InstagramMedia::EXPAND,
         ];
-        foreach ($media as &$item) {
+        foreach ($my_media as &$item) {
             /** @var \InstagramAPI\Media\InstagramMedia|null $validMedia */
             $validMedia = null;
             switch ($item['type']) {
@@ -106,9 +105,9 @@ class UploadAlbum implements ShouldQueue
         unset($item);
 /////////////////////////////
         try {
-            $ig->timeline->uploadAlbum($media, ['caption' => $captionText]);
+            $ig->timeline->uploadAlbum($my_media, ['caption' => $captionText]);
         } catch (\Exception $e) {
-            echo 'Something went wrong: '.$e->getMessage()."\n";
+            echo 'Something went wrong2: ' . $e->getMessage() . "\n";
         }
 
     }

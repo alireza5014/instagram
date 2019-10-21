@@ -17,7 +17,8 @@ class ImageUpload
 
     private $is_water_mark = false;
     private $is_resized = false;
-
+    private $is_square = false;
+    private $square_width=520;
 
 
     private $request;
@@ -32,16 +33,16 @@ class ImageUpload
     private $resize_image_name;
     private $water_mark_image_name;
     private $square_name;
-    private $rand;
+     private $rand;
     private $result;
 
 
-    public static function makeImageWithText ($text,$file_name)
+    public static function makeImageWithText($text, $file_name)
     {
 
         $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         // create Image from file
-        $img = Image::canvas(100,100, $rand_color);
+        $img = Image::canvas(100, 100, $rand_color);
 //
 //// write text
 //        $img->text('The quick brown fox jumps over the lazy dog.');
@@ -50,8 +51,8 @@ class ImageUpload
 //        $img->text('The quick brown fox jumps over the lazy dog.', 120, 100);
 
 // use callback to define details
-        $img->text($text, 50, 50, function($font) {
-             $font->file(public_path().'/fonts/ARLRDBD.TTF');
+        $img->text($text, 50, 50, function ($font) {
+            $font->file(public_path() . '/fonts/ARLRDBD.TTF');
             $font->size(50);
             $font->color('#fff');
             $font->align('center');
@@ -60,13 +61,14 @@ class ImageUpload
         });
 
 // draw transparent text
-        $img->text('foo', 0, 0, function($font) {
-            $font->color(array(rand(0,255), rand(0,255), rand(0,255), 0.5));
+        $img->text('foo', 0, 0, function ($font) {
+            $font->color(array(rand(0, 255), rand(0, 255), rand(0, 255), 0.5));
         });
 
-        $img->save(public_path()."/".$file_name );
+        $img->save(public_path() . "/" . $file_name);
 
     }
+
     public function request($request)
     {
         $this->request = $request;
@@ -101,6 +103,13 @@ class ImageUpload
         return $this;
     }
 
+    public function  makeSquare($width)
+    {
+
+        $this->square_width = $width;
+        $this->is_square = true;
+        return $this;
+    }
     public function position($position)
     {
         $this->is_water_mark = true;
@@ -162,6 +171,9 @@ class ImageUpload
                 if ($this->is_resized) {
                     $this->makeResized($this->result['image_path'], $i);
                 }
+                if ($this->is_square) {
+                    $this->createSquare($this->result['image_path'], $i);
+                }
 
                 $i++;
 
@@ -169,44 +181,46 @@ class ImageUpload
 
         } else {
 
-
-            $this->rand = str_random(10) . "_";
-
-            $image = $this->request->main_image;  // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-
-            $this->image_name = $this->rand . 'main_image.png';
-
-
-//            $image_path = '/images/' . $this->request->user_id . '/jobs/';
-
-            $path = public_path() . $this->store_path;
-
-            if (!File::exists($path)) {
-                // path does not exist
-                // dir doesn't exist, make it
-                File::makeDirectory($path, $mode = 0777, true, true);
-            }
-            File::put($path . $this->image_name, base64_decode($image));
-
-
-            $path = array($this->store_path . $this->image_name);
-
-            if ($this->is_water_mark) {
-                $this->makeWaterMark($path, 0);
-            }
-            if ($this->is_resized) {
-                $this->makeResized($path, 0);
-                $this->makeSquare($path,0);
+            $m_image = [];
+            if (gettype($this->request[$this->target]) != 'array') {
+                $m_image[] = $this->request[$this->target];
+            } else {
+                $m_image = $this->request[$this->target];
             }
 
-            $this->result['image_path'][0] = $path[0];
+            for ($i = 0; $i < sizeof($m_image); $i++) {
+                $this->rand = str_random(10) . "_";
 
-//            $img = Image::make($path);
-//            $img->resize(260/2, 300/2);
-//
-//            $img->save('aaaaa.png',50);
+                $image = str_replace('data:image/png;base64,', '', $m_image[$i]);
+                $image = str_replace(' ', '+', $image);
+
+                $this->image_name = $this->rand . 'main_image.png';
+                $path = public_path($this->store_path) ;
+
+                if (!File::exists($path)) {
+                    // path does not exist
+                    // dir doesn't exist, make it
+                    File::makeDirectory($path, $mode = 0777, true, true);
+                }
+                File::put($path . $this->image_name, base64_decode($image));
+
+
+                $image_path[$i] =  $this->store_path . $this->image_name;
+
+                if ($this->is_water_mark) {
+                   $this->makeWaterMark($image_path, $i);
+                }
+                if ($this->is_resized) {
+                    $this->makeResized($image_path, $i);
+                 }
+                if($this->is_square){
+                    $this->createSquare($image_path, $i);
+
+                }
+
+                $this->result['image_path'][$i] = $image_path[$i];
+            }
+
 
         }
 
@@ -240,7 +254,7 @@ class ImageUpload
         $img->insert($watermark, $this->position);
 
 
-        $img->save(public_path() . '/' . $this->store_path . '/' . $this->water_mark_image_name, $this->quality);
+        $img->save(public_path($this->store_path . '/' . $this->water_mark_image_name), $this->quality);
         $this->result['watermark_path'][$i] = $this->store_path . '/' . $this->water_mark_image_name;
 
 
@@ -258,12 +272,12 @@ class ImageUpload
         $width = $img1->getWidth() - $img1->getWidth() * $this->resize_percent / 100;
         $height = $img1->getHeight() - $img1->getHeight() * $this->resize_percent / 100;
         $img1->resize($width, $height);
-        $img1->save(public_path() . '/' . $this->store_path . '/' . $this->resize_image_name);
+        $img1->save(public_path( $this->store_path . '/' . $this->resize_image_name));
         $this->result['resize_path'][$i] = $this->store_path . '/' . $this->resize_image_name;
     }
 
 
-    private function makeSquare($image_path, $i)
+    private function createSquare($image_path, $i)
     {
 
 //        $this->square_name = $this->rand . 'square_image.jpg';
@@ -284,7 +298,7 @@ class ImageUpload
         $this->square_name = $this->rand . 'square_image.jpg';
 
         $img1 = $this->image_instance($image_path[$i]);
-        $img1->resize(520, 520);
+        $img1->resize($this->square_width, $this->square_width);
 
 
         $watermark = Image::make(public_path($this->watermark_path));
@@ -297,9 +311,8 @@ class ImageUpload
         $img1->insert($watermark, $this->position);
 
 
-        $img1->save(public_path() . '/' . $this->store_path . '/' . $this->square_name);
+        $img1->save(public_path( $this->store_path . '/' . $this->square_name) );
         $this->result['square_path'][$i] = $this->store_path . '/' . $this->square_name;
-
 
 
     }

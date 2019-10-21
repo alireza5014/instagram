@@ -32,19 +32,17 @@ class UploadPhoto implements ShouldQueue
     public function handle()
     {
 
-   $account=  Account::where('id',$this->post->account_id)->first();
-
 
         set_time_limit(0);
         date_default_timezone_set('UTC');
+        $post = $this->post;
 
-/////// CONFIG ///////
-        $username = $account->username;
-        $password=$account->password;
-//////////////////////
-/////// MEDIA ////////
-        $photoFilename =public_path($this->post->file);
-        $captionText = $this->post->caption." ".str_replace(',','#',$this->post->tags);
+        $username = $post->account->username;
+        $password = $post->account->password;
+
+        $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
+
+        $photoFilename =public_path($this->post->medias[0]->file);
 
 //////////////////////
         $ig = new \InstagramAPI\Instagram();

@@ -26,9 +26,10 @@ class PostCreateRequest extends FormRequest
         return [
 
             'caption'=>'required',
-            'main_image'=>'required',
+//            'main_image'=>'required',
             'accounts'=>'required',
             'sent_at'=>'required',
+            'tags'=>'required',
 
         ];
     }

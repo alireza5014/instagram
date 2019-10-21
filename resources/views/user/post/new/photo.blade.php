@@ -68,7 +68,6 @@
                                     <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
                                 </div>
                             </div>
-                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>
 
                             <script>
                                 // Init Simple Cropper
