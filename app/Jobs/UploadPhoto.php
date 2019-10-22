@@ -49,6 +49,7 @@ class UploadPhoto implements ShouldQueue
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {
+
             echo 'Something went wrong: '.$e->getMessage()."\n";
 
         }
