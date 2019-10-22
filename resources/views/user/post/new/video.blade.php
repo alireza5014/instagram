@@ -16,7 +16,8 @@
 
 
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
@@ -29,7 +30,7 @@
 
     <div class="vz_main_content">
 
-        <form method="POST" id="new_post" enctype="multipart/form-data">
+        <form method="POST" action="{{route('user.post.create_video')}}" id="new_post" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-body">
@@ -43,12 +44,12 @@
                                     <div class="card">
                                         <div class="card-body">
 
-                                            <label for="caption">   کپشن   :</label><br/>
+                                            <label for="caption"> کپشن :</label><br/>
 
                                             <textarea name="caption" class="form-control" rows="8"></textarea>
 
                                             <div class="form-group mt-3">
-                                                <label for="tags">   تگ ها :</label><br/>
+                                                <label for="tags"> تگ ها :</label><br/>
 
                                                 <input style="width: 100%" type="text" id="tags" name="tags" value=""
                                                        data-role="tagsinput" class="form-control"/>
@@ -60,21 +61,29 @@
 
                         </div>
                         <div class="col-md-3">
-{{--                            <div class="card ">--}}
-{{--                                <div id="form_image_preview" class="card-body text-center">--}}
-{{--                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>--}}
+                            <div class="form-group">
+                                <label for="keywords"> نوع محتوا :</label>
+                                <span>ویدیو</span>
+                            </div>
 
-{{--                            <script>--}}
-{{--                                // Init Simple Cropper--}}
-{{--                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);--}}
-{{--                            </script>--}}
-<input type="file" name="video" id="video">
+                            <input accept="video/*" style="display: none" type="file" name="video" id="video">
+                            <div  class="card" id="card-video">
+                            <div class="card-block  text-center">
+                                <img id="video-image" src="{{url('images/video.png')}}" alt="Image" class="img-responsive">
+
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="80"
+                                         aria-valuemin="0" aria-valuemax="100">0%
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="form-group">
                                 <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">
+                                <select name="accounts[]" class="selectpicker form-control" multiple
+                                        data-live-search="true">
                                     @foreach($accounts as $account)
                                         <option value="{{$account->id}}">{{$account->username}}</option>
 
@@ -83,36 +92,27 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="keywords">   مجموعه :</label><br/>
-                                <select id="category_id" name="category_id"
-                                        class="form-control">
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->title}}</option>
 
-                                    @endforeach
-                                </select>
-                            </div>
 
 
                             <div class="form-group">
-                                <label for="keywords">   زمان ارسال :</label><br/>
+                                <label for="keywords"> زمان ارسال :</label><br/>
 
-                               <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}"  type="text" class="form-control">
+                                <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}" type="text"
+                                       class="form-control">
                             </div>
 
 
                             <div class="col-lg-12 mr-4 ml-4">
 
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                <button type="submit" id="new_post_btn"
+                                        class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
                                         data-style="expand-right">
                                     <span class="ladda-label">ایجاد    </span>
                                     <span class="ladda-spinner"></span></button>
                             </div>
 
                         </div>
-
-
 
 
                     </div>
@@ -148,6 +148,9 @@
     <script src="{{url('gelr/js/init/toastr.js')}}"></script>
     <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
     <script src="script.js"></script>
+
+
+    <script src="http://malsup.github.com/jquery.form.js"></script>
     <!-- Ladda Button init Js -->
     <script>
         $('.selectpicker').selectpicker();
@@ -156,63 +159,88 @@
 
 
         jQuery(document).ready(function () {
-            $("#new_post_btn").on("click", function (t) {
 
-                var e = t.currentTarget,
-                    a = Ladda.create(e);
 
-                a.start();
+        $("#card-video").on("click", function (t) {
+            $('#video').trigger('click')
+        });
+        $('#video').on('change',function () {
+            $('#video-image').attr('src','{{url('images/video_file.png')}}')
+        })
+            $('form').ajaxForm({
+                beforeSend: function (t) {
 
-                $.ajax({
-                    url: 'create',
-                    method: 'POST',
-                    data: $('#new_post').serialize(),
-                    success: function (data, textStatus, jqXHR) {
-                        if (textStatus === 'success') {
-                            toastr.success(data.status + "اطلاعات با موفقیت ثبت شد", "", {
+
+
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    $('.progress-bar').text(percentComplete + '%');
+                    $('.progress-bar').css('width', percentComplete + '%');
+                },
+                success: function (data) {
+
+
+                     if (data.status==1) {
+                        $('.progress-bar').text('Uploaded');
+                        $('.progress-bar').css('width', '100%');
+
+                        setTimeout(function () {
+                            $('.progress-bar').text('');
+                            $('.progress-bar').css('width', '0%');
+                            $('#video-image').attr('src','{{url('images/video.png')}}')
+
+                        },2000);
+
+                         $('#new_post')[0].reset();
+                         $("#tags").tagsinput('removeAll');
+
+
+                         toastr.success(data.message, "توجه", {
+                             progressBar: !0
+                         });
+                    }
+                    else  {
+
+                         toastr.warning(data.message, "توجه", {
+                             progressBar: !0
+                         });
+
+                         $('.progress-bar').text('0%');
+                        $('.progress-bar').css('width', '0%');
+
+                    }
+                },
+                error: function (error) {
+
+                    if (error.status === 422) {
+                        var errors = $.parseJSON(error.responseText);
+                        $.each(errors.errors, function (key, val) {
+
+                            toastr.error(val[0], "خطا", {
                                 progressBar: !0
                             });
+                        });
+                    } else {
 
-
-                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
-                            $('#new_post')[0].reset();
-                            $("#tags").tagsinput('removeAll');
-                        }
-
-
-                    },
-                    error: function (error) {
-
-                        if (error.status === 422) {
-                            var errors = $.parseJSON(error.responseText);
-                            $.each(errors.errors, function (key, val) {
-
-                                toastr.error(val[0], "خطا", {
-                                    progressBar: !0
-                                });
-                            });
-                        } else {
-
-                            console.log(error.responseText)
-                            toastr.error("خطا در ثبت اطلاعات", "خطا ", {
-                                progressBar: !0
-                            });
-                        }
-
-
-                    },
-
-                    complete: function () {
-                        a.stop();
+                        console.log(error.responseText)
+                        toastr.error("خطا در ثبت اطلاعات", "خطا ", {
+                            progressBar: !0
+                        });
                     }
 
-                });
 
+                },
 
-            })
+                complete: function () {
+
+                }
+            });
+
         });
 
-     </script>
+    </script>
 
 
 @endsection
+
+

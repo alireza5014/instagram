@@ -1,0 +1,1 @@
+{"video":{"name":"file1.mp4","type":"video\/mp4","tmp_name":"C:\\xampp\\tmp\\phpCDF9.tmp","error":0,"size":5414873}}

@@ -42,6 +42,7 @@ Route::group(['prefix' => '/user'], function () {
 
          Route::get('/post/edit/{id}', 'User\PostController@edit')->name('user.post.edit');
         Route::post('/post/{type}/create', 'User\PostController@create')->name('user.post.create');
+        Route::post('/post/video/create_video', 'User\PostController@create_video')->name('user.post.create_video');
 
 
         Route::post('/post/edit/modify', 'User\PostController@modify')->name('user.post.modify');

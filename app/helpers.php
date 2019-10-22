@@ -1,4 +1,5 @@
 <?php
+use InstagramAPI\Media\Video\FFmpeg;
 function getUser($key)
 {
      if (auth('user')->check()) {
@@ -7,3 +8,5 @@ function getUser($key)
     return 1;
 
 }
+
+

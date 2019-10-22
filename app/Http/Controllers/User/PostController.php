@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostModifyRequest;
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\UploadVideoRequest;
 use App\Jobs\UploadAlbum;
 use App\Jobs\UploadPhoto;
 use App\Jobs\UploadVideo;
@@ -17,14 +18,15 @@ use App\Model\Meta;
 use App\Model\Post;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 class PostController extends Controller
 {
     public function list($category_id = 0, Request $request)
     {
-//        @exec('ffprobe -version 2>&1', $output, $statusCode);
-//        return $output;
+
+
         $posts = Post::where('user_id', getUser('id'))
             ->with('category')
             ->with('account')
@@ -82,26 +84,24 @@ class PostController extends Controller
 
     }
 
-    public function create($type,PostCreateRequest $request)
+    public function create($type, PostCreateRequest $request)
     {
         $types = ['photo', 'album', 'video', 'story', 'live'];
         $category_id = array_search($type, $types) + 1;
         switch ($type) {
             case "photo":
-                $this->create_photo($category_id,$request);
+                $this->create_photo($category_id, $request);
                 break;
 
             case "album":
-                $this->create_album($category_id,$request);
+                $this->create_album($category_id, $request);
                 break;
 
-            case "video":
-                $this->create_video($category_id,$request);
-                break;
+
         }
     }
 
-    private function create_photo($category_id,$request)
+    private function create_photo($category_id, $request)
     {
 
         try {
@@ -134,7 +134,7 @@ class PostController extends Controller
                     'caption' => $request->caption,
                 ]);
 
-                $medias =[];
+                $medias = [];
 
                 for ($j = 0; $j < sizeof($image['image_path']); $j++) {
                     $media = new Media;
@@ -168,45 +168,38 @@ class PostController extends Controller
     }
 
 
-    private function create_video($category_id,$request)
+    public function create_video(UploadVideoRequest $request)
     {
-        $file = $request->file('video');
 
-        //Display File Name
-        echo 'File Name: '.$file->getClientOriginalName();
-        echo '<br>';
 
-        //Display File Extension
-        echo 'File Extension: '.$file->getClientOriginalExtension();
-        echo '<br>';
 
-        //Display File Real Path
-        echo 'File Real Path: '.$file->getRealPath();
-        echo '<br>';
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $video_name = rand() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('videos'), $video_name);
+            $output = array(
+                'status' => 1,
+                'message' => 'Image uploaded successfully',
+            );
+        }
+        else{
+            $output = array(
+                'status' => 0,
+                'message' => 'Image uploaded unsuccessfully',
+            );
+        }
 
-        //Display File Size
-        echo 'File Size: '.$file->getSize();
-        echo '<br>';
+//        return response()->json($output);
 
-        //Display File Mime Type
-        echo 'File Mime Type: '.$file->getMimeType();
-         exit();
-
-        return 1;
         try {
 
-
-
-            //Move Uploaded File
-            $destinationPath = 'uploads';
-            $file->move($destinationPath,$file->getClientOriginalName());
 
             $accounts = $request->accounts;
 
             for ($i = 0; $i < sizeof($accounts); $i++) {
                 $post = Post::create([
 
-                    'category_id' => $category_id,
+                    'category_id' => 3,
                     'user_id' => getUser('id'),
                     'account_id' => $accounts[$i],
                     'tags' => $request->tags,
@@ -215,9 +208,9 @@ class PostController extends Controller
                 ]);
 
 
-                    $media = new Media;
-                    $media->file = "file2.mp4";
-                    $media->type = "video";
+                $media = new Media;
+                $media->file = "videos/".$video_name;
+                $media->type = "video";
 
 
                 $post->medias()->save(
@@ -238,14 +231,15 @@ class PostController extends Controller
 
         }
 
+
+
         return response()->json(['status' => 1, 'message' => 'با موفقیت ثبت شد']);
 
 
     }
 
-    private function create_album($category_id,$request)
+    private function create_album($category_id, $request)
     {
-
 
 
         try {
