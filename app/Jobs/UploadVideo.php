@@ -27,7 +27,7 @@ class UploadVideo implements ShouldQueue
 //
 
 
-        \InstagramAPI\Utils::$ffprobeBin = public_path('FFmpeg/bin/ffprobe.exe');
+//        \InstagramAPI\Utils::$ffprobeBin = public_path('FFmpeg/bin/ffprobe.exe');
     }
 
 

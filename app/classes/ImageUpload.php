@@ -8,6 +8,7 @@
 
 namespace App\classes;
 
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
 use Illuminate\Support\Facades\File;
@@ -158,7 +159,7 @@ class ImageUpload
             foreach ($images as $image) {
 
                 $this->image_name = $image->getClientOriginalName();
-                $this->rand = str_random(10) . "_";
+                $this->rand = Str::random(10) . "_";
 
 
                 $image->move(public_path() . '/' . $this->store_path . '/', $this->rand . $this->image_name);
@@ -189,7 +190,7 @@ class ImageUpload
             }
 
             for ($i = 0; $i < sizeof($m_image); $i++) {
-                $this->rand = str_random(10) . "_";
+                $this->rand = Str::random(10) . "_";
 
                 $image = str_replace('data:image/png;base64,', '', $m_image[$i]);
                 $image = str_replace(' ', '+', $image);
