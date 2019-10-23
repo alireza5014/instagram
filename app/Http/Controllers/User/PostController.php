@@ -16,6 +16,7 @@ use App\Model\Account;
 use App\Model\Category;
 use App\Model\Meta;
 use App\Model\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Validator;
@@ -86,42 +87,40 @@ class PostController extends Controller
 
     public function create($type, PostCreateRequest $request)
     {
-        $types = ['photo', 'album', 'video', 'story', 'live'];
-        $category_id = array_search($type, $types) + 1;
-        switch ($type) {
-            case "photo":
-                $this->create_photo($category_id, $request);
-                break;
 
-            case "album":
-                $this->create_album($category_id, $request);
-                break;
+        $send_at = Carbon::now()->addMinute($request->sent_at);
+        $filepath = explode(',', $request->filepath);
+        if (sizeof($filepath) > 1) {
+            $this->create_album(1,$filepath,$send_at,$request);
 
+        } else {
+            $this->create_photo(2,$filepath,$send_at, $request);
 
         }
+
+//        $types = ['photo', 'album', 'video', 'story', 'live'];
+
+//        $category_id = array_search($type, $types) + 1;
+//        switch ($type) {
+//            case "photo":
+//                $this->create_photo($category_id, $request);
+//                break;
+//
+//            case "album":
+//                $this->create_album($category_id, $request);
+//                break;
+//
+//
+//        }
     }
 
-    private function create_photo($category_id, $request)
+    private function create_photo($category_id,$filepath,$sent_at, $request)
     {
 
         try {
 
 
-            if ($request->main_image != "") {
-                $image = UpLoad::create('image')
-                    ->request($request)
-                    ->target('main_image')
-                    ->store_path('images/posts/')
-                    ->watermark_path('images/cover.jpg')
-                    ->resize_percent(50)
-                    ->makeSquare(2000)
-                    ->makeUpload();
-                file_put_contents('images.txt', json_encode($image));
-
-            }
-
             $accounts = $request->accounts;
-            file_put_contents('accounts.txt', json_encode($request->all()));
 
             for ($i = 0; $i < sizeof($accounts); $i++) {
                 $post = Post::create([
@@ -130,29 +129,24 @@ class PostController extends Controller
                     'user_id' => getUser('id'),
                     'account_id' => $accounts[$i],
                     'tags' => $request->tags,
-                    'sent_at' => $request->sent_at,
+                    'sent_at' => $sent_at,
                     'caption' => $request->caption,
                 ]);
 
-                $medias = [];
+                $media = new Media;
+                $media->file = $filepath[0];
+                $media->type = "photo";
+                $medias = $media;
 
-                for ($j = 0; $j < sizeof($image['image_path']); $j++) {
-                    $media = new Media;
-                    $media->file = $image['image_path'][$j];
-                    $media->type = "photo";
-                    $medias = $media;
-
-
-                }
-                $post->medias()->save(
-                    $medias
-                );
+                $post->medias()->save($medias);
 
 
-                $posts[$i] = Post::where('id', $post->id)->with(['medias' => function ($q) {
+                $posts[$i] = Post::where('id', $post->id)->with(['media' => function ($q) {
                     return $q->select('post_id', 'type', 'file');
                 }])->with('account')->first();
-                UploadPhoto::dispatch($posts[$i])->delay(now()->addSecond(10));;
+
+                file_put_contents('post.txt', \GuzzleHttp\json_encode($posts));
+                UploadPhoto::dispatch($posts[$i])->delay(now()->addSecond($request->sent_at));;
 
             }
 
@@ -172,7 +166,6 @@ class PostController extends Controller
     {
 
 
-
         if ($request->hasFile('video')) {
             $video = $request->file('video');
             $video_name = rand() . '.' . $video->getClientOriginalExtension();
@@ -181,8 +174,7 @@ class PostController extends Controller
                 'status' => 1,
                 'message' => 'Image uploaded successfully',
             );
-        }
-        else{
+        } else {
             $output = array(
                 'status' => 0,
                 'message' => 'Image uploaded unsuccessfully',
@@ -209,7 +201,7 @@ class PostController extends Controller
 
 
                 $media = new Media;
-                $media->file = "videos/".$video_name;
+                $media->file = "videos/" . $video_name;
                 $media->type = "video";
 
 
@@ -232,49 +224,36 @@ class PostController extends Controller
         }
 
 
-
         return response()->json(['status' => 1, 'message' => 'با موفقیت ثبت شد']);
 
 
     }
 
-    private function create_album($category_id, $request)
+    private function create_album($category_id,$filepath,$sent_at, $request)
     {
 
 
         try {
 
 
-            if ($request->main_image != "") {
-                $image = UpLoad::create('image')
-                    ->request($request)
-                    ->target('main_image')
-                    ->store_path('images/posts/')
-                    ->watermark_path('images/cover.jpg')
-                    ->resize_percent(50)
-                    ->makeSquare(2000)
-                    ->makeUpload();
-
-
-            }
 
             $accounts = $request->accounts;
+
             for ($i = 0; $i < sizeof($accounts); $i++) {
                 $post = Post::create([
-
                     'category_id' => $category_id,
                     'user_id' => getUser('id'),
                     'account_id' => $accounts[$i],
                     'tags' => $request->tags,
-                    'sent_at' => $request->sent_at,
+                    'sent_at' => $sent_at,
                     'caption' => $request->caption,
                 ]);
 
                 $medias = [];
 
-                for ($j = 0; $j < sizeof($image['image_path']); $j++) {
+                for ($j = 0; $j < sizeof($filepath); $j++) {
                     $media = new Media;
-                    $media->file = $image['image_path'][$j];
+                    $media->file = $filepath[$j];
                     $media->type = "photo";
                     $medias[] = $media;
 

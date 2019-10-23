@@ -22,4 +22,9 @@ class Post extends Model
     {
         return $this->hasMany(Media::class);
     }
+
+    public function media()
+    {
+        return $this->hasOne(Media::class);
+    }
 }

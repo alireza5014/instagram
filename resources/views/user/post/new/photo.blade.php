@@ -9,11 +9,7 @@
     <link rel="stylesheet" href="{{url('gelr/vendors/ladda-button/css/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="{{url('gelr/vendors/toastr/css/toastr.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url('crop/css/style.css')}}"/>
-    {{--    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style-example.css')}}"/>--}}
-    <link rel="stylesheet" type="text/css" href="{{url('crop/css/jquery.Jcrop.css')}}"/>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.Jcrop.js')}}"></script>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.SimpleCropper.js')}}"></script>
-    {{--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>--}}
+
     <link rel='stylesheet' href='{{url('gelr/css/bootstrap-tagsinput.css')}}'>
 
 
@@ -35,113 +31,95 @@
 
         <form method="POST" id="new_post" enctype="multipart/form-data">
             @csrf
-            <div class="card">
+            <div class="card" style="max-width: 1200px; margin: auto">
                 <div class="card-body">
                     <div class="row">
 
 
-                        <div class="col-md-8">
-                            <div class="row">
+                        <div class="col-md-6">
 
-                                <div class="col-lg-12 mt-4 mb-4">
-                                    <div class="card">
-                                        <div class="card-body">
+                            <div class="col-lg-12 mt-0 mb-4">
 
-                                            <label for="caption"> کپشن :</label><br/>
+                                <div id="lfm" data-input="thumbnail" data-preview="holder" class="  text-center">
+                                    <div id="holder">
+                                        <img src="{{url('images/cover.jpg')}}" width="150px" alt="Image" class="img-responsive">
 
-                                            <textarea name="caption" class="form-control" rows="8"></textarea>
+                                    </div>
+                                    <input id="thumbnail" class="form-control" type="hidden" name="filepath">
 
-                                            <div class="form-group mt-3">
-                                                <label for="tags"> تگ ها :</label><br/>
 
-                                                <input style="width: 100%" type="text" id="tags" name="tags" value=""
-                                                       data-role="tagsinput" class="form-control"/>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="row">
+
+
+                                    <label for="caption"> کپشن :</label><br/>
+
+                                    <textarea id="caption" name="caption" class="form-control" rows="8"></textarea>
+
+                                    <div style="width: 100% !important;" class="form-group mt-3">
+                                        <label for="tags"> تگ ها :</label><br/>
+
+                                        <input type="text" id="tags" name="tags" value=""
+                                               data-role="tagsinput" class="form-control"/>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>اکانت ها:</label>
+                                        <select name="accounts[]" class="selectpicker form-control" multiple
+                                                data-live-search="true">
+                                            @foreach($accounts as $account)
+                                                <option value="{{$account->id}}">{{$account->username}}</option>
+
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="keywords"> زمان ارسال :</label><br/>
+                                        <select id="sent_at" name="sent_at"
+                                                class="form-control">
+                                            @for($i=0;$i<60;$i++)
+
+                                                <option value="{{$i}}">@if($i==0) همین
+                                                    الان @else{{$i." دقیقه دیگر "}}@endif</option>
+
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
-                        <div class="col-md-4">
+                                <div class="col-lg-12 mr-4 ml-4">
 
-                            <div class="col-md-12">
-                                <div class="input-group">
-          <span class="input-group-btn">
-            <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
-              <i class="fa fa-picture-o"></i> Choose
-            </a>
-          </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="filepath">
-                                </div>
-                                <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                                <div class="input-group">
-          <span class="input-group-btn">
-            <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
-              <i class="fa fa-picture-o"></i> Choose
-            </a>
-          </span>
-                                    <input id="thumbnail2" class="form-control" type="text" name="filepath">
-                                </div>
-                                <div id="holder2" style="margin-top:15px;max-height:100px;"></div>
-                            </div>
-
-
-                            <div class="card ">
-                                <div id="form_image_preview" class="card-body text-center">
-                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
+                                    <button type="button" id="new_post_btn"
+                                            class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                            data-style="expand-right">
+                                        <span class="ladda-label">ایجاد    </span>
+                                        <span class="ladda-spinner"></span></button>
                                 </div>
                             </div>
-
-                            <script>
-                                // Init Simple Cropper
-                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);
-                            </script>
-
-                            <div class="form-group">
-                                <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple
-                                        data-live-search="true">
-                                    @foreach($accounts as $account)
-                                        <option value="{{$account->id}}">{{$account->username}}</option>
-
-                                    @endforeach
-
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keywords"> مجموعه :</label><br/>
-                                <select id="category_id" name="category_id"
-                                        class="form-control">
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->title}}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="keywords"> زمان ارسال :</label><br/>
-
-                                <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}" type="text"
-                                       class="form-control">
-                            </div>
-
-
-                            <div class="col-lg-12 mr-4 ml-4">
-
-                                <button type="button" id="new_post_btn"
-                                        class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
-                                        data-style="expand-right">
-                                    <span class="ladda-label">ایجاد    </span>
-                                    <span class="ladda-spinner"></span></button>
-                            </div>
-
                         </div>
 
 
+                        <div class="col-md-6">
+                            <div class="smartphone">
+                                <div class="content">
+                                    <p class="text-center m-2">Posts</p>
+
+                                    <div class="card bg-danger" id="__image"  >
+
+
+                                    </div>
+
+                                    <p id="_caption" class="text-right m-2"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -181,8 +159,62 @@
 
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
+        String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
 
         jQuery(document).ready(function () {
+
+            $("#thumbnail").on("change", function (t) {
+
+                    var src = $(this).val();
+                    var myarr = src.split(',');
+                    if (myarr.length > 1) {
+
+                        var html1 = '<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">  <ol class="carousel-indicators">';
+                        var html2 = '<div class="carousel-inner">';
+
+                        var status = '';
+                        for (var i = 0; i < myarr.length; i++) {
+                            if(i == 0) { status = "active"} else {status = ""};
+                            html1 += ' <li data-target="#carouselExampleIndicators" data-slide-to="' + i + '" class="'+status+'"></li>';
+                            html2 += ' <div class="carousel-item '+status+'">  <img  style="height: 200px" class="d-block w-100" src="' + myarr[i] + '" alt="First slide">  </div>';
+                        }
+                        html1 += "</ol>";
+                        html2 += "</div>";
+                        html2 += '<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>  <span class="sr-only">قبلی</span>  </a>  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">    <span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="sr-only">بعدی</span>  </a>  </div>';
+
+
+                        $('#__image').html(html1 + html2);
+                    } else {
+                        $('#__image').html('<img id="_image"  style="width: 100%"  src="'+myarr[0]+'"    onerror="this.onerror=null;this.src=\'http://localhost/instagram/public/my-files/files/user_1/plus-flat.png\';">');
+
+                    }
+                }
+            );
+            $("#caption").on("keyup", function (t) {
+
+
+                var tags = $('#tags').val();
+
+                $('#_caption').html('<span>' + $(this).val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', "#") + '</span>');
+
+
+            });
+
+            jQuery(document).on('change', "#tags", function (e) {
+
+
+                var tags = $(this).val();
+
+                $('#_caption').html('<span>' + $('#caption').val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', " #") + '</span>');
+
+                e.preventDefault();
+            });
+
+
             $("#new_post_btn").on("click", function (t) {
 
                 var e = t.currentTarget,
@@ -203,6 +235,8 @@
 
                             $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
                             $('#new_post')[0].reset();
+                            $('#__image').html('');
+                            $('#holder').html('<img src="{{url('images/cover.jpg')}}" width="150px" alt="Image" class="img-responsive">');
                             $("#tags").tagsinput('removeAll');
                         }
 
@@ -240,38 +274,34 @@
         });
 
 
-
-
-
-
     </script>
 
 
     <script>
-        {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
+                {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
         var route_prefix = "{{ url('laravel-filemanager') }}";
 
         $('#lfm').filemanager('image', {prefix: route_prefix});
         $('#lfm2').filemanager('file', {prefix: route_prefix});
 
-        $(document).ready(function(){
+        $(document).ready(function () {
 
             // Define function to open filemanager window
-            var lfm = function(options, cb) {
+            var lfm = function (options, cb) {
                 var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
                 window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
                 window.SetUrl = cb;
             };
 
             // Define LFM summernote button
-            var LFMButton = function(context) {
+            var LFMButton = function (context) {
                 var ui = $.summernote.ui;
                 var button = ui.button({
                     contents: '<i class="note-icon-picture"></i> ',
                     tooltip: 'Insert image with filemanager',
-                    click: function() {
+                    click: function () {
 
-                        lfm({type: 'image', prefix: '/laravel-filemanager'}, function(lfmItems, path) {
+                        lfm({type: 'image', prefix: '/laravel-filemanager'}, function (lfmItems, path) {
                             lfmItems.forEach(function (lfmItem) {
                                 context.invoke('insertImage', lfmItem.url);
                             });

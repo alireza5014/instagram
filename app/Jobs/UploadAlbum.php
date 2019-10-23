@@ -47,11 +47,15 @@ class UploadAlbum implements ShouldQueue
         $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
 
 
+        $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
+
+
+
         foreach ($post->medias as $media) {
 
             $my_media[] = [
                 'type' => $media->type,
-                'file' => public_path($media->file), // Path to the photo file.
+                'file' => public_path(str_replace('http://localhost/instagram/public','',$media->file))
             ];
 
         }

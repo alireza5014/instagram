@@ -11,4 +11,9 @@ class UserController extends Controller
     {
        return view('user.home');
  }
+
+ public function file_manager()
+    {
+       return view('user.file_manager.index')->render();
+ }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7c948601b16bebde3e7be1ef90004ec",
+    "content-hash": "6e7e21e38ec019a4a6e3b08aadeb6c71",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -4037,26 +4037,26 @@
         },
         {
             "name": "unisharp/laravel-filemanager",
-            "version": "dev-master",
+            "version": "v2.0.0-alpha8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UniSharp/laravel-filemanager.git",
-                "reference": "78aeffe12087b1ba43cdbd5e48385bb0e5221b0e"
+                "reference": "8639557f6a945dfae4cc013b7a35d68d9fce1e74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/78aeffe12087b1ba43cdbd5e48385bb0e5221b0e",
-                "reference": "78aeffe12087b1ba43cdbd5e48385bb0e5221b0e",
+                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/8639557f6a945dfae4cc013b7a35d68d9fce1e74",
+                "reference": "8639557f6a945dfae4cc013b7a35d68d9fce1e74",
                 "shasum": ""
             },
             "require": {
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
-                "illuminate/config": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.*.*",
-                "illuminate/container": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.*.*",
-                "illuminate/filesystem": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.*.*",
-                "illuminate/http": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.*.*",
-                "illuminate/support": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || 6.*.*",
+                "illuminate/config": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.*",
+                "illuminate/container": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.*",
+                "illuminate/filesystem": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.*",
+                "illuminate/http": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.*",
+                "illuminate/support": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.*",
                 "intervention/image": "2.*",
                 "php": ">=5.4.0"
             },
@@ -4097,7 +4097,7 @@
                     "email": "opensource@unisharp.com"
                 }
             ],
-            "description": "A file upload/editor intended for use with Laravel 6 and CKEditor / TinyMCE",
+            "description": "A file upload/editor intended for use with Laravel 5 and CKEditor / TinyMCE",
             "keywords": [
                 "CKEditor",
                 "file",
@@ -4108,7 +4108,7 @@
                 "tinymce",
                 "upload"
             ],
-            "time": "2019-10-18T17:11:21+00:00"
+            "time": "2019-05-06T03:22:05+00:00"
         },
         {
             "name": "valga/fbns-react",
@@ -6031,9 +6031,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "unisharp/laravel-filemanager": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

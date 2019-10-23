@@ -41,11 +41,10 @@ class UploadPhoto implements ShouldQueue
         $password = $post->account->password;
 
         $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
-
-        $photoFilename =public_path($this->post->medias[0]->file);
+        $photoFilename =public_path(str_replace('http://localhost/instagram/public','',$post->media->file));
 
 //////////////////////
-        $ig = new \InstagramAPI\Instagram();
+        $ig = new \InstagramAPI\Instagram(true,true);
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {

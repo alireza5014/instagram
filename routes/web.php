@@ -32,10 +32,11 @@ Auth::routes();
 Route::group(['prefix' => '/laravel-filemanager','middleware' => 'auth:user'], function () {
 
 
+    Route::get('/', 'User\UserController@file_manager')->name('user.file_manager.index');
 
 
     // Show LFM
-    Route::get('/', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
+//    Route::get('/', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
     // upload
     Route::any('/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload')->name('unisharp.lfm.upload');
     // list images & files
@@ -86,6 +87,8 @@ Route::group(['prefix' => '/user'], function () {
 
 
         Route::get('/account/list', 'User\AccountController@list')->name('user.account.list');
+
+
         Route::post('/account/create', 'User\AccountController@create')->name('user.account.create');
 
 

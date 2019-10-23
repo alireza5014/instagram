@@ -37,7 +37,8 @@ return [
      */
 
 
-
+    'images_folder_name' => 'storage',//-was photos
+    'files_folder_name'  => 'storage',//-was files
 
     // Flexible way to customize client folders accessibility
     // If you want to customize client folders, publish tag="lfm_handler"
@@ -65,7 +66,7 @@ return [
             ],
         ],
         'image' => [
-            'folder_name'  => 'photos',
+            'folder_name'  => 'files',
             'startup_view' => 'list',
             'max_size'     => 50000, // size in KB
             'valid_mime'   => [
