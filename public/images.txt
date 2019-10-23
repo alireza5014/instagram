@@ -1,1 +1,1 @@
-{"watermark_path":["images\/posts\/\/jUPVkUkZdc_water_mark_image.png"],"resize_path":["images\/posts\/\/jUPVkUkZdc_resize_image.png"],"square_path":["images\/posts\/\/jUPVkUkZdc_square_image.jpg"],"image_path":["images\/posts\/jUPVkUkZdc_main_image.png"]}
+{"watermark_path":["images\/posts\/\/mlHqAqB3Q9_water_mark_image.png"],"resize_path":["images\/posts\/\/mlHqAqB3Q9_resize_image.png"],"square_path":["images\/posts\/\/mlHqAqB3Q9_square_image.jpg"],"image_path":["images\/posts\/mlHqAqB3Q9_main_image.png"]}
