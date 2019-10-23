@@ -14,6 +14,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/irazasyed/larasupport" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lazyjsonmapper/lazyjsonmapper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mgp25/instagram-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
@@ -26,6 +27,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/react/socket" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/react/stream" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ringcentral/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/unisharp/laravel-filemanager" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/valga/fbns-react" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/winbox/args" />
     </content>

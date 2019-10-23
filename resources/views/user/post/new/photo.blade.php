@@ -19,7 +19,8 @@
 
 
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
@@ -39,19 +40,19 @@
                     <div class="row">
 
 
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="row">
 
                                 <div class="col-lg-12 mt-4 mb-4">
                                     <div class="card">
                                         <div class="card-body">
 
-                                            <label for="caption">   کپشن   :</label><br/>
+                                            <label for="caption"> کپشن :</label><br/>
 
                                             <textarea name="caption" class="form-control" rows="8"></textarea>
 
                                             <div class="form-group mt-3">
-                                                <label for="tags">   تگ ها :</label><br/>
+                                                <label for="tags"> تگ ها :</label><br/>
 
                                                 <input style="width: 100%" type="text" id="tags" name="tags" value=""
                                                        data-role="tagsinput" class="form-control"/>
@@ -62,7 +63,30 @@
                             </div>
 
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+
+                            <div class="col-md-12">
+                                <div class="input-group">
+          <span class="input-group-btn">
+            <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
+              <i class="fa fa-picture-o"></i> Choose
+            </a>
+          </span>
+                                    <input id="thumbnail" class="form-control" type="text" name="filepath">
+                                </div>
+                                <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                                <div class="input-group">
+          <span class="input-group-btn">
+            <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
+              <i class="fa fa-picture-o"></i> Choose
+            </a>
+          </span>
+                                    <input id="thumbnail2" class="form-control" type="text" name="filepath">
+                                </div>
+                                <div id="holder2" style="margin-top:15px;max-height:100px;"></div>
+                            </div>
+
+
                             <div class="card ">
                                 <div id="form_image_preview" class="card-body text-center">
                                     <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
@@ -76,7 +100,8 @@
 
                             <div class="form-group">
                                 <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">
+                                <select name="accounts[]" class="selectpicker form-control" multiple
+                                        data-live-search="true">
                                     @foreach($accounts as $account)
                                         <option value="{{$account->id}}">{{$account->username}}</option>
 
@@ -86,7 +111,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="keywords">   مجموعه :</label><br/>
+                                <label for="keywords"> مجموعه :</label><br/>
                                 <select id="category_id" name="category_id"
                                         class="form-control">
                                     @foreach($categories as $category)
@@ -98,23 +123,23 @@
 
 
                             <div class="form-group">
-                                <label for="keywords">   زمان ارسال :</label><br/>
+                                <label for="keywords"> زمان ارسال :</label><br/>
 
-                               <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}"  type="text" class="form-control">
+                                <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}" type="text"
+                                       class="form-control">
                             </div>
 
 
                             <div class="col-lg-12 mr-4 ml-4">
 
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                <button type="button" id="new_post_btn"
+                                        class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
                                         data-style="expand-right">
                                     <span class="ladda-label">ایجاد    </span>
                                     <span class="ladda-spinner"></span></button>
                             </div>
 
                         </div>
-
-
 
 
                     </div>
@@ -214,7 +239,62 @@
             })
         });
 
-     </script>
+
+
+
+
+
+    </script>
+
+
+    <script>
+        {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
+        var route_prefix = "{{ url('laravel-filemanager') }}";
+
+        $('#lfm').filemanager('image', {prefix: route_prefix});
+        $('#lfm2').filemanager('file', {prefix: route_prefix});
+
+        $(document).ready(function(){
+
+            // Define function to open filemanager window
+            var lfm = function(options, cb) {
+                var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+                window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+                window.SetUrl = cb;
+            };
+
+            // Define LFM summernote button
+            var LFMButton = function(context) {
+                var ui = $.summernote.ui;
+                var button = ui.button({
+                    contents: '<i class="note-icon-picture"></i> ',
+                    tooltip: 'Insert image with filemanager',
+                    click: function() {
+
+                        lfm({type: 'image', prefix: '/laravel-filemanager'}, function(lfmItems, path) {
+                            lfmItems.forEach(function (lfmItem) {
+                                context.invoke('insertImage', lfmItem.url);
+                            });
+                        });
+
+                    }
+                });
+                return button.render();
+            };
+
+            // Initialize summernote with LFM button in the popover button group
+            // Please note that you can add this button to any other button group you'd like
+            $('#summernote-editor').summernote({
+                toolbar: [
+                    ['popovers', ['lfm']],
+                ],
+                buttons: {
+                    lfm: LFMButton
+                }
+            })
+        });
+
+    </script>
 
 
 @endsection
