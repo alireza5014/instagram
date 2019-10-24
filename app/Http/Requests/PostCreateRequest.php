@@ -25,6 +25,7 @@ class PostCreateRequest extends FormRequest
     {
         return [
 
+            'filepath'=>'required',
             'caption'=>'required',
 //            'main_image'=>'required',
             'accounts'=>'required',

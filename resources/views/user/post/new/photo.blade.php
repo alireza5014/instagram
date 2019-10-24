@@ -31,7 +31,7 @@
 
         <form method="POST" id="new_post" enctype="multipart/form-data">
             @csrf
-            <div class="card" style="max-width: 1200px; margin: auto">
+            <div class="card" style="max-width: 1200px; margin: auto;min-height: 75vh;" >
                 <div class="card-body">
                     <div class="row">
 
@@ -111,7 +111,7 @@
                                 <div class="content">
                                     <p class="text-center m-2">Posts</p>
 
-                                    <div class="card bg-danger" id="__image"  >
+                                    <div class="card bg-white" id="__image"  style="max-height: 180px;" >
 
 
                                     </div>
@@ -236,6 +236,8 @@
                             $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
                             $('#new_post')[0].reset();
                             $('#__image').html('');
+                            $('.filter-option-inner-inner').html('');
+
                             $('#holder').html('<img src="{{url('images/cover.jpg')}}" width="150px" alt="Image" class="img-responsive">');
                             $("#tags").tagsinput('removeAll');
                         }
