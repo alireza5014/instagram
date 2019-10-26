@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Gelr Bootstrap 4 Admin Template">
 
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url('gelr/css/images/favicon.png')}}">
     <link rel="stylesheet" href="{{url('gelr/css/bootstrap.min.css')}}" >
 
     <link rel="stylesheet" href="{{url('gelr/css/style.css')}}">

@@ -19,14 +19,13 @@ use App\Model\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
-use Illuminate\Support\Facades\Validator;
+ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 class PostController extends Controller
 {
     public function list($category_id = 0, Request $request)
     {
-
 
         $posts = Post::where('user_id', getUser('id'))
             ->with('category')
@@ -145,7 +144,7 @@ class PostController extends Controller
                     return $q->select('post_id', 'type', 'file');
                 }])->with('account')->first();
 
-                file_put_contents('post.txt', \GuzzleHttp\json_encode($posts));
+
                 UploadPhoto::dispatch($posts[$i])->delay(now()->addSecond($request->sent_at));;
 
             }

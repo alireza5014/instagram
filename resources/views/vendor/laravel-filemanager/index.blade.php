@@ -21,10 +21,13 @@
   <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/dropzone.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/mime-icons.min.css') }}">
   <style>{!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/css/lfm.css')) !!}</style>
+
+  <link rel="stylesheet" href="{{url('gelr/css/style.css')}}">
+
   {{-- Use the line below instead of the above if you need to cache the css. --}}
   {{-- <link rel="stylesheet" href="{{ asset('/vendor/laravel-filemanager/css/lfm.css') }}"> --}}
 </head>
-<body>
+<body dir="rtl">
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark" id="nav">
     <a class="navbar-brand invisible-lg d-none d-lg-inline" id="to-previous">
       <i class="fas fa-arrow-left fa-fw"></i>
@@ -285,8 +288,8 @@
       headers: {
         'Authorization': 'Bearer ' + getUrlParam('token')
       },
-      acceptedFiles: "{{ implode(',', $helper->availableMimeTypes()) }}",
-      maxFilesize: ('{{ $helper->maxUploadSize() }}' / 1000)
+      {{--acceptedFiles: "{{ implode(',', $helper->availableMimeTypes()) }}",--}}
+      {{--maxFilesize: ('{{ $helper->maxUploadSize() }}' / 1000)--}}
     }
   </script>
 </body>

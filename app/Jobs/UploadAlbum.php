@@ -43,10 +43,6 @@ class UploadAlbum implements ShouldQueue
 
         $username = $post->account->username;
         $password = $post->account->password;
-
-        $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
-
-
         $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
 
 

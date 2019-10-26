@@ -33,7 +33,7 @@
             @csrf
             <div class="card" style="max-width: 1200px; margin: auto;min-height: 75vh;" >
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row"  >
 
 
                         <div class="col-md-6">
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-
+<hr class="mb-5"/>
                 </div>
 
             </div>

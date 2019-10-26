@@ -7115,8 +7115,11 @@ figure.portfolio_item.hover .curl {
    /* The device with borders */
  .smartphone {
    position: relative;
+
    width: 250px;
    height: 500px;
+
+
    margin: auto;
    border: 16px black solid;
    border-top-width: 60px;
@@ -7164,3 +7167,8 @@ figure.portfolio_item.hover .curl {
 #nav a, #fab a{
   margin-right: 20px !important;
 }
+
+.fab-wrapper{
+  z-index: 2000 !important;
+}
+
