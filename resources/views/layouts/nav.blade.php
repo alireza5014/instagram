@@ -4,8 +4,8 @@
                           Logo
             *===========================-->
         <div class="text-center rt_nav_wrapper d-flex align-items-center">
-            <a class="nav_logo rt_logo" href="index.html"><img src="images/logo-dark.svg" alt="logo"/></a>
-            <a class="nav_logo nav_logo_mob" href="index.html"><img src="images/mobile-logo.svg" alt="logo"/></a>
+            <a class="nav_logo rt_logo" href="index.html"><img src="{{url('gelr/images/logo-dark.svg')}}" alt="logo"/></a>
+            <a class="nav_logo nav_logo_mob" href="index.html"><img src="{{url('gelr/images/mobile-logo.svg')}}" alt="logo"/></a>
 
         </div>
         <!--=========================*
@@ -155,7 +155,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item rt-notification-item">
                             <div class="rt-notification-thumbnail">
-                                <img src="images/author/author-img1.jpg" class="profile-pic" alt="image">
+                                <img src="{{url('gelr/images/author/author-img1.jpg')}}" class="profile-pic" alt="image">
                             </div>
                             <div class="rt-notification-item-content flex-grow">
                                 <h6 class="rt-notification-subject ellipsis font-weight-medium">آرش خادملو
@@ -169,7 +169,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item rt-notification-item">
                             <div class="rt-notification-thumbnail">
-                                <img src="images/author/author-img2.jpg" class="profile-pic" alt="image">
+                                <img src="{{url('gelr/images/author/author-img2.jpg')}}" class="profile-pic" alt="image">
                             </div>
                             <div class="rt-notification-item-content flex-grow">
                                 <h6 class="rt-notification-subject ellipsis font-weight-medium">آرش خادملو
@@ -183,7 +183,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item rt-notification-item">
                             <div class="rt-notification-thumbnail">
-                                <img src="images/user.jpg" class="profile-pic" alt="image">
+                                <img src="{{url('gelr/images/user.jpg')}}" class="profile-pic" alt="image">
                             </div>
                             <div class="rt-notification-item-content flex-grow">
                                 <h6 class="rt-notification-subject ellipsis font-weight-medium"> آرش خادملو
@@ -197,7 +197,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item rt-notification-item">
                             <div class="rt-notification-thumbnail">
-                                <img src="images/author/author-img3.jpg" class="profile-pic" alt="image">
+                                <img src="{{url('gelr/images/author/author-img3.jpg')}}" class="profile-pic" alt="image">
                             </div>
                             <div class="rt-notification-item-content flex-grow">
                                 <h6 class="rt-notification-subject ellipsis font-weight-medium"> آرش خادملو
@@ -224,7 +224,7 @@
                                     <span class="hi_name">سلام،</span>
                                     آرش خادملو. <i class="feather ft-chevron-down"></i>
                                 </span>
-                                <img src="images/user.jpg" alt="profile"/>
+                                <img src="{{url('gelr/images/user.jpg')}}" alt="profile"/>
                             </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown pt-2"

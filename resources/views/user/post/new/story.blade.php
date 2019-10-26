@@ -1,83 +1,46 @@
-@extends('layouts.app')
-
-@section('header')
-
-    @parent
-
-    <title> اضافه کردن مطلب جدید </title>
-    <link rel="stylesheet" href="{{url('gelr/vendors/summernote/dist/summernote-bs4.css')}}">
-    <link rel="stylesheet" href="{{url('gelr/vendors/ladda-button/css/ladda-themeless.min.css')}}">
-    <link rel="stylesheet" href="{{url('gelr/vendors/toastr/css/toastr.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style.css')}}"/>
-    {{--    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style-example.css')}}"/>--}}
-    <link rel="stylesheet" type="text/css" href="{{url('crop/css/jquery.Jcrop.css')}}"/>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.Jcrop.js')}}"></script>
-    <script type="text/javascript" src="{{url('crop/scripts/jquery.SimpleCropper.js')}}"></script>
-    {{--    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>--}}
-    <link rel='stylesheet' href='{{url('gelr/css/bootstrap-tagsinput.css')}}'>
+<form method="POST" id="new_post" enctype="multipart/form-data">
+    @csrf
+    <div class="card" style="max-width: 1200px; margin: auto">
+        <div class="card-body">
+            <div class="row">
 
 
+                <div class="col-md-6">
 
+                    <div class="col-lg-12 mt-0 mb-4">
 
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+                        <div id="lfm" data-input="thumbnail" data-preview="holder" class="  text-center">
+                            <div id="holder">
+                                <img src="{{url('images/instagram/story.png')}}" width="150px" alt="Image" class="img-responsive">
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-
-
-@endsection
-
-@section('content')
-
-    <div class="vz_main_content">
-
-        <form method="POST" id="new_post" enctype="multipart/form-data">
-            @csrf
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-
-
-                        <div class="col-md-9">
-                            <div class="row">
-
-                                <div class="col-lg-12 mt-4 mb-4">
-                                    <div class="card">
-                                        <div class="card-body">
-
-                                            <label for="caption">   کپشن   :</label><br/>
-
-                                            <textarea name="caption" class="form-control" rows="8"></textarea>
-
-                                            <div class="form-group mt-3">
-                                                <label for="tags">   تگ ها :</label><br/>
-
-                                                <input style="width: 100%" type="text" id="tags" name="tags" value=""
-                                                       data-role="tagsinput" class="form-control"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                            <input id="thumbnail" class="form-control" type="hidden" name="filepath">
+
 
                         </div>
-                        <div class="col-md-3">
-                            <div class="card ">
-                                <div id="form_image_preview" class="card-body text-center">
-                                    <img src="{{url('images/cover.jpg')}}" alt="Image" class="img-responsive">
-                                </div>
+                        <div class="row">
+
+
+                            <label for="caption"> کپشن :</label><br/>
+
+                            <textarea id="caption" name="caption" class="form-control" rows="8"></textarea>
+
+                            <div style="width: 100% !important;" class="form-group mt-3">
+                                <label for="tags"> تگ ها :</label><br/>
+
+                                <input type="text" id="tags" name="tags" value=""
+                                       data-role="tagsinput" class="form-control"/>
                             </div>
-                            <textarea style="display: none   ;" id="main_image" name="main_image"></textarea>
 
-                            <script>
-                                // Init Simple Cropper
-                                $('#form_image_preview').simpleCropper(600, 600, 200, 200);
-                            </script>
 
-                            <div class="form-group">
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
                                 <label>اکانت ها:</label>
-                                <select name="accounts[]" class="selectpicker form-control" multiple data-live-search="true">
+                                <select name="accounts[]" class="selectpicker form-control" multiple
+                                        data-live-search="true">
                                     @foreach($accounts as $account)
                                         <option value="{{$account->id}}">{{$account->username}}</option>
 
@@ -86,136 +49,227 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="keywords">   مجموعه :</label><br/>
-                                <select id="category_id" name="category_id"
+                            <div class="form-group col-md-6">
+                                <label for="keywords"> زمان ارسال :</label><br/>
+                                <select id="sent_at" name="sent_at"
                                         class="form-control">
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->title}}</option>
+                                    @for($i=0;$i<60;$i++)
 
-                                    @endforeach
+                                        <option value="{{$i}}">@if($i==0) همین
+                                            الان @else{{$i." دقیقه دیگر "}}@endif</option>
+
+                                    @endfor
                                 </select>
                             </div>
-
-
-                            <div class="form-group">
-                                <label for="keywords">   زمان ارسال :</label><br/>
-
-                               <input dir="ltr" name="sent_at" value="{{\Carbon\Carbon::now()}}"  type="text" class="form-control">
-                            </div>
-
-
-                            <div class="col-lg-12 mr-4 ml-4">
-
-                                <button type="button" id="new_post_btn" class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
-                                        data-style="expand-right">
-                                    <span class="ladda-label">ایجاد    </span>
-                                    <span class="ladda-spinner"></span></button>
-                            </div>
-
                         </div>
 
+                        <div class="col-lg-12 mr-4 ml-4">
 
-
-
+                            <button type="button" id="new_post_btn"
+                                    class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                    data-style="expand-right">
+                                <span class="ladda-label">ایجاد    </span>
+                                <span class="ladda-spinner"></span></button>
+                        </div>
                     </div>
-
                 </div>
 
+
+                <div class="col-md-6">
+                    <div class="smartphone">
+                        <div class="content">
+                            <p class="text-center m-2">{{$type}}</p>
+
+                            <div class="card bg-danger" id="__image"  >
+
+
+                            </div>
+
+                            <p id="_caption" class="text-right m-2"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
+
+        </div>
 
     </div>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+    String.prototype.replaceAll = function (search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
 
 
-@endsection
+    jQuery(document).ready(function () {
 
+        $("#thumbnail").on("change", function (t) {
 
-@section('foot')
-    @parent
-    <script src="{{url('gelr/vendors/summernote/dist/summernote-bs4.min.js')}}"></script>
-    <script src="{{url('gelr/js/init/editors.js')}}"></script>
+                var src = $(this).val();
+                var myarr = src.split(',');
+                if (myarr.length > 1) {
 
+                    var html1 = '<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">  <ol class="carousel-indicators">';
+                    var html2 = '<div class="carousel-inner">';
 
+                    var status = '';
+                    for (var i = 0; i < myarr.length; i++) {
+                        var extension = myarr[i].substr((myarr[i].lastIndexOf('.') + 1));
 
-    <!-- Main Js -->
-    <script src="{{url('gelr/js/main.js')}}"></script>
+                        if(i == 0) { status = "active"} else {status = ""};
+                        html1 += ' <li data-target="#carouselExampleIndicators" data-slide-to="' + i + '" class="'+status+'"></li>';
+                        if(extension=='mp4'){
+                            html2 += ' <div class="carousel-item '+status+'">  <video  autoplay loop  style="height: 200px" class="d-block w-100"  > <source src="' + myarr[i] + '" /> </video> </div>';
 
-    <script src="{{url('gelr/vendors/ladda-button/js/spin.min.js')}}"></script>
-    <script src="{{url('gelr/vendors/ladda-button/js/ladda.jquery.min.js')}}"></script>
-    <script src="{{url('gelr/vendors/ladda-button/js/ladda.min.js')}}"></script>
+                        }else{
+                            html2 += ' <div class="carousel-item '+status+'">  <img  style="height: 200px" class="d-block w-100" src="' + myarr[i] + '" alt="First slide">  </div>';
 
-
-    <script src="{{url('gelr/vendors/toastr/js/toastr.min.js')}}"></script>
-    <!-- Toastr Init -->
-    <script src="{{url('gelr/js/init/toastr.js')}}"></script>
-    <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
-    <script src="script.js"></script>
-    <!-- Ladda Button init Js -->
-    <script>
-        $('.selectpicker').selectpicker();
-
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-
-        jQuery(document).ready(function () {
-            $("#new_post_btn").on("click", function (t) {
-
-                var e = t.currentTarget,
-                    a = Ladda.create(e);
-
-                a.start();
-
-                $.ajax({
-                    url: 'create',
-                    method: 'POST',
-                    data: $('#new_post').serialize(),
-                    success: function (data, textStatus, jqXHR) {
-                        if (textStatus === 'success') {
-                            toastr.success(data.status + "اطلاعات با موفقیت ثبت شد", "", {
-                                progressBar: !0
-                            });
-
-
-                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
-                            $('#new_post')[0].reset();
-                            $("#tags").tagsinput('removeAll');
                         }
+                     }
+                    html1 += "</ol>";
+                    html2 += "</div>";
+                    html2 += '<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>  <span class="sr-only">قبلی</span>  </a>  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">    <span class="carousel-control-next-icon" aria-hidden="true"></span>  <span class="sr-only">بعدی</span>  </a>  </div>';
 
 
-                    },
-                    error: function (error) {
+                    $('#__image').html(html1 + html2);
+                } else {
+                    $('#__image').html('<img id="_image"  style="width: 100%"  src="'+myarr[0]+'"    onerror="this.onerror=null;this.src=\'http://localhost/instagram/public/my-files/files/user_1/plus-flat.png\';">');
 
-                        if (error.status === 422) {
-                            var errors = $.parseJSON(error.responseText);
-                            $.each(errors.errors, function (key, val) {
-
-                                toastr.error(val[0], "خطا", {
-                                    progressBar: !0
-                                });
-                            });
-                        } else {
-
-                            console.log(error.responseText)
-                            toastr.error("خطا در ثبت اطلاعات", "خطا ", {
-                                progressBar: !0
-                            });
-                        }
+                }
+            }
+        );
+        $("#caption").on("keyup", function (t) {
 
 
-                    },
+            var tags = $('#tags').val();
 
-                    complete: function () {
-                        a.stop();
-                    }
-
-                });
+            $('#_caption').html('<span>' + $(this).val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', "#") + '</span>');
 
 
-            })
         });
 
-     </script>
+        jQuery(document).on('change', "#tags", function (e) {
 
 
-@endsection
+            var tags = $(this).val();
+
+            $('#_caption').html('<span>' + $('#caption').val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', " #") + '</span>');
+
+            e.preventDefault();
+        });
+
+
+        $("#new_post_btn").on("click", function (t) {
+
+            var e = t.currentTarget,
+                a = Ladda.create(e);
+
+            a.start();
+
+            $.ajax({
+                url: 'create',
+                method: 'POST',
+                data: $('#new_post').serialize(),
+                success: function (data, textStatus, jqXHR) {
+                    if (textStatus === 'success') {
+                        toastr.success(  "اطلاعات با موفقیت ثبت شد", "", {
+                            progressBar: !0
+                        });
+
+
+                        $("#form_image_preview img").attr("src", "{{url('images/instagram/story.png')}}")
+                        $('#new_post')[0].reset();
+                        $('#__image').html('');
+                        $('#holder').html('<img src="{{url('images/instagram/story.png')}}" width="150px" alt="Image" class="img-responsive">');
+                        $("#tags").tagsinput('removeAll');
+                    }
+
+
+                },
+                error: function (error) {
+
+                    if (error.status === 422) {
+                        var errors = $.parseJSON(error.responseText);
+                        $.each(errors.errors, function (key, val) {
+
+                            toastr.error(val[0], "خطا", {
+                                progressBar: !0
+                            });
+                        });
+                    } else {
+
+                        console.log(error.responseText)
+                        toastr.error("خطا در ثبت اطلاعات", "خطا ", {
+                            progressBar: !0
+                        });
+                    }
+
+
+                },
+
+                complete: function () {
+                    a.stop();
+                }
+
+            });
+
+
+        })
+    });
+
+
+</script>
+<script>
+            {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
+    var route_prefix = "{{ url('laravel-filemanager') }}";
+
+    $('#lfm').filemanager('image', {prefix: route_prefix});
+    $('#lfm2').filemanager('file', {prefix: route_prefix});
+
+    $(document).ready(function () {
+
+        // Define function to open filemanager window
+        var lfm = function (options, cb) {
+            var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+            window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+            window.SetUrl = cb;
+        };
+
+        // Define LFM summernote button
+        var LFMButton = function (context) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+                contents: '<i class="note-icon-picture"></i> ',
+                tooltip: 'Insert image with filemanager',
+                click: function () {
+
+                    lfm({type: 'image', prefix: '/laravel-filemanager'}, function (lfmItems, path) {
+                        lfmItems.forEach(function (lfmItem) {
+                            context.invoke('insertImage', lfmItem.url);
+                        });
+                    });
+
+                }
+            });
+            return button.render();
+        };
+
+        // Initialize summernote with LFM button in the popover button group
+        // Please note that you can add this button to any other button group you'd like
+        $('#summernote-editor').summernote({
+            toolbar: [
+                ['popovers', ['lfm']],
+            ],
+            buttons: {
+                lfm: LFMButton
+            }
+        })
+    });
+
+</script>
+

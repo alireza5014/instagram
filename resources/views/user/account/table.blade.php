@@ -2,7 +2,7 @@
 
 
 
-<div class="col-lg-4 col-md-6  mb-3 col-sm-12 grid-item">
+<div class="col-lg-3 col-md-6  mb-3 col-sm-12 grid-item">
     <div class="team_member">
         <img src="{{$account->profile_pic_url}}" alt="Team Member">
         <div class="member_name">

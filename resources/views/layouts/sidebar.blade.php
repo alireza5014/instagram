@@ -6,7 +6,7 @@
         <div class="navbar-content scroll-div">
             <div class="vz_navigation">
                 <ul class="sidebar nav flex-column">
-                    <li class="active"><a class="nav-link text-center"   ><i class="feather ft-home"></i><span>داشبورد</span></a></li>
+                    <li class="active"><a class="nav-link text-center"  href="{{route('user.home')}}"  ><i class="feather ft-home"></i><span>داشبورد</span></a></li>
 
                     <li><a class="nav-link text-center" href="{{route('user.account.list')}}"  ><i class="feather ft-gitlab"></i><span> اکانت ها </span></a></li>
                      <li><a class="nav-link text-center"  href="{{route('user.post.new',['type'=>'photo'])}}" data-nav="advance_kit"><i class="feather ft-zap"></i><span>  ارسال محتوا   </span></a></li>

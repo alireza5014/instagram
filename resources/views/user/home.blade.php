@@ -8,7 +8,55 @@
 
 @section('content')
 
+
+
+
     <div class="vz_main_content">
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <div class="card d-flex w-100">
+                    <div class="row no-gutters row-bordered row-border-light h-100 widget_row">
+                        <div class="d-flex col-md-6 col-lg-3 align-items-center col-sm-6">
+                            <div class="card-body">
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-auto">
+                                        <img src="{{url('gelr/images/icon-bg.png')}}" alt="Icon">
+                                        <i class="feather ft-briefcase text-primary display-4"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="mb-0 text-muted">تصویر <span class="text-primary">پست ها</span></h6>
+                                        <h4 class="mt-3 mb-0">6834</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="d-flex col-md-6 col-lg-3 align-items-center col-sm-6">
+                            <div class="card-body">
+                                <div class="row align-items-center mb-3">
+                                    <div class="col-auto">
+                                        <img src="{{url('gelr/images/icon-bg.png')}}" alt="Icon">
+                                        <i class="feather ft-briefcase text-primary display-4"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="mb-0 text-muted">تصویر <span class="text-primary">پست ها</span></h6>
+                                        <h4 class="mt-3 mb-0">6834</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
         <div class="row">
             <div class="col-lg-8 stretched_card">
                 <div class="card">
@@ -168,75 +216,7 @@
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 mt-4">
-                <div class="card d-flex w-100">
-                    <div class="row no-gutters row-bordered row-border-light h-100 widget_row">
-                        <div class="d-flex col-md-6 col-lg-3 align-items-center">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-3">
-                                    <div class="col-auto">
-                                        <img src="images/icon-bg.png" alt="Icon">
-                                        <i class="feather ft-briefcase text-primary display-4"></i>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-0 text-muted">فعال <span class="text-primary">پروژه</span></h6>
-                                        <h4 class="mt-3 mb-0">6834</h4>
-                                    </div>
-                                </div>
-                                <p class="mb-0 text-muted">63٪ از ماه گذشته</p>
-                            </div>
-                        </div>
-                        <div class="d-flex col-md-6 col-lg-3 align-items-center">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-3">
-                                    <div class="col-auto">
-                                        <img src="images/icon-bg.png" alt="Icon">
-                                        <i class="feather ft-shopping-cart text-primary display-4"></i>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-0 text-muted"><span class="text-primary">مجموع</span> سفارشات</h6>
-                                        <h4 class="mt-3 mb-0">8263</h4>
-                                    </div>
-                                </div>
-                                <p class="mb-0 text-muted">70٪ از ماه گذشته</p>
-                            </div>
-                        </div>
-                        <div class="d-flex col-md-6 col-lg-3 align-items-center">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-3">
-                                    <div class="col-auto">
-                                        <img src="images/icon-bg.png" alt="Icon">
-                                        <i class="feather ft-users text-primary display-4"></i>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-0 text-muted">جدید <span class="text-primary">بازدیدکنندگان</span>
-                                        </h6>
-                                        <h4 class="mt-3 mb-0">9236</h4>
-                                    </div>
-                                </div>
-                                <p class="mb-0 text-muted">59% From Last Month</p>
-                            </div>
-                        </div>
-                        <div class="d-flex col-md-6 col-lg-3 align-items-center">
-                            <div class="card-body">
-                                <div class="row align-items-center mb-3">
-                                    <div class="col-auto">
-                                        <img src="images/icon-bg.png" alt="Icon">
-                                        <i class="feather ft-dollar-sign text-primary display-4"></i>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-0 text-muted">مجموع <span class="text-primary">درآمد</span></h6>
-                                        <h4 class="mt-3 mb-0">3682</h4>
-                                    </div>
-                                </div>
-                                <p class="mb-0 text-muted">89٪ از ماه گذشته</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
             <div class="col-lg-6 mt-4 stretched_card">
                 <div class="card">

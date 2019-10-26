@@ -18,7 +18,10 @@ function getUser($key)
 //    return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
 //}
 
-function  getFolderSize($dir){
+function  getFolderSize($dir=0){
+    if($dir==0){
+        $dir=public_path('my-files/files/'.getUser('id'));
+    }
 $file_size = 0;
 
 if (is_dir($dir)) {

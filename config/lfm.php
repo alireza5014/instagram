@@ -62,7 +62,9 @@ return [
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
-                'image/svg+xml',
+                'video/mp4',
+//                'image/svg+xml',
+
             ],
         ],
         'image' => [
@@ -74,9 +76,9 @@ return [
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
-                'image/svg+xml',
-                'application/pdf',
-                'text/plain',
+//                'image/svg+xml',
+//                'application/pdf',
+//                'text/plain',
             ],
         ],
     ],
@@ -97,7 +99,7 @@ return [
 
     'should_validate_size'     => false,
 
-    'should_validate_mime'     => false,
+    'should_validate_mime'     => true,
 
     // permissions to be set when create a new folder or when it creates automatically with thumbnails
     'create_folder_mode'       => 0755,

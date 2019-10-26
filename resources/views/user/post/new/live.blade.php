@@ -150,7 +150,7 @@
     <!-- Toastr Init -->
     <script src="{{url('gelr/js/init/toastr.js')}}"></script>
     <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
-    <script src="script.js"></script>
+
     <!-- Ladda Button init Js -->
     <script>
         $('.selectpicker').selectpicker();

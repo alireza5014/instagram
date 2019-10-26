@@ -1,330 +1,266 @@
-@extends('layouts.app')
-
-@section('header')
-
-    @parent
-
-    <title> اضافه کردن مطلب جدید </title>
-    <link rel="stylesheet" href="{{url('gelr/vendors/summernote/dist/summernote-bs4.css')}}">
-    <link rel="stylesheet" href="{{url('gelr/vendors/ladda-button/css/ladda-themeless.min.css')}}">
-    <link rel="stylesheet" href="{{url('gelr/vendors/toastr/css/toastr.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('crop/css/style.css')}}"/>
-
-    <link rel='stylesheet' href='{{url('gelr/css/bootstrap-tagsinput.css')}}'>
+<form method="POST" id="new_post" enctype="multipart/form-data">
+    @csrf
+    <div class="card" style="max-width: 1200px; margin: auto;min-height: 75vh;">
+        <div class="card-body">
+            <div class="row">
 
 
+                <div class="col-md-6">
 
+                    <div class="col-lg-12 mt-0 mb-4">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
+                        <div id="lfm2" data-input="thumbnail" data-preview="holder" class="  text-center">
+                            <div id="holder">
+                                <img src="{{url('images/instagram/video.png')}}" width="150px" alt="Image"
+                                     class="img-responsive">
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-
-
-@endsection
-
-@section('content')
-
-    <div class="vz_main_content">
-
-        <form method="POST" id="new_post" enctype="multipart/form-data">
-            @csrf
-            <div class="card" style="max-width: 1200px; margin: auto;min-height: 75vh;">
-                <div class="card-body">
-                    <div class="row">
-
-
-                        <div class="col-md-6">
-
-                            <div class="col-lg-12 mt-0 mb-4">
-
-                                <div id="lfm2" data-input="thumbnail" data-preview="holder" class="  text-center">
-                                    <div id="holder">
-                                        <img src="{{url('images/cover.jpg')}}" width="150px" alt="Image"
-                                             class="img-responsive">
-
-                                    </div>
-                                    <input id="thumbnail" class="form-control" type="hidden" name="filepath">
-
-
-                                </div>
-                                <div class="row">
-
-
-                                    <label for="caption"> کپشن :</label><br/>
-
-                                    <textarea id="caption" name="caption" class="form-control" rows="8"></textarea>
-
-                                    <div style="width: 100% !important;" class="form-group mt-3">
-                                        <label for="tags"> تگ ها :</label><br/>
-
-                                        <input type="text" id="tags" name="tags" value=""
-                                               data-role="tagsinput" class="form-control"/>
-                                    </div>
-
-
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label>اکانت ها:</label>
-                                        <select name="accounts[]" class="selectpicker form-control" multiple
-                                                data-live-search="true">
-                                            @foreach($accounts as $account)
-                                                <option value="{{$account->id}}">{{$account->username}}</option>
-
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="keywords"> زمان ارسال :</label><br/>
-                                        <select id="sent_at" name="sent_at"
-                                                class="form-control">
-                                            @for($i=0;$i<60;$i++)
-
-                                                <option value="{{$i}}">@if($i==0) همین
-                                                    الان @else{{$i." دقیقه دیگر "}}@endif</option>
-
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mr-4 ml-4">
-
-                                    <button type="button" id="new_post_btn"
-                                            class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
-                                            data-style="expand-right">
-                                        <span class="ladda-label">ایجاد    </span>
-                                        <span class="ladda-spinner"></span></button>
-                                </div>
                             </div>
+                            <input id="thumbnail" class="form-control" type="hidden" name="filepath">
+
+
+                        </div>
+                        <div class="row">
+
+
+                            <label for="caption"> کپشن :</label><br/>
+
+                            <textarea id="caption" name="caption" class="form-control" rows="8"></textarea>
+
+                            <div style="width: 100% !important;" class="form-group mt-3">
+                                <label for="tags"> تگ ها :</label><br/>
+
+                                <input type="text" id="tags" name="tags" value=""
+                                       data-role="tagsinput" class="form-control"/>
+                            </div>
+
+
                         </div>
 
 
-                        <div class="col-md-6">
-                            <div class="smartphone">
-                                <div class="content">
-                                    <p class="text-center m-2">Posts</p>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>اکانت ها:</label>
+                                <select name="accounts[]" class="selectpicker form-control" multiple
+                                        data-live-search="true">
+                                    @foreach($accounts as $account)
+                                        <option value="{{$account->id}}">{{$account->username}}</option>
 
-                                    <div class="card bg-white" id="__image" style="max-height: 180px;">
+                                    @endforeach
 
-
-                                    </div>
-
-                                    <p id="_caption" class="text-right m-2"></p>
-                                </div>
+                                </select>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="keywords"> زمان ارسال :</label><br/>
+                                <select id="sent_at" name="sent_at"
+                                        class="form-control">
+                                    @for($i=0;$i<60;$i++)
+
+                                        <option value="{{$i}}">@if($i==0) همین
+                                            الان @else{{$i." دقیقه دیگر "}}@endif</option>
+
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mr-4 ml-4">
+
+                            <button type="button" id="new_post_btn"
+                                    class="btn btn-success ladda-button ladda_btn mb-4 btn-block"
+                                    data-style="expand-right">
+                                <span class="ladda-label">ایجاد    </span>
+                                <span class="ladda-spinner"></span></button>
                         </div>
                     </div>
-
                 </div>
 
+
+                <div class="col-md-6">
+                    <div class="smartphone">
+                        <div class="content">
+                            <p class="text-center m-2">{{$type}}</p>
+
+                            <div class="card bg-white" id="__image" style="max-height: 180px;">
+
+
+                            </div>
+
+                            <p id="_caption" class="text-right m-2"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
+
+        </div>
 
     </div>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+    String.prototype.replaceAll = function (search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
 
 
-@endsection
+    jQuery(document).ready(function () {
+
+        $("#thumbnail").on("change", function (t) {
+
+                var src = $(this).val();
+                var extension = src.substr((src.lastIndexOf('.') + 1));
+
+                if (extension != 'mp4') {
 
 
-@section('foot')
-    @parent
-    <script src="{{url('gelr/vendors/summernote/dist/summernote-bs4.min.js')}}"></script>
-    <script src="{{url('gelr/js/init/editors.js')}}"></script>
+                    setTimeout(function () {
+                        $('#holder img').attr('src', "{{url('images/instagram/video.png')}}");
 
 
-
-    <!-- Main Js -->
-    <script src="{{url('gelr/js/main.js')}}"></script>
-
-    <script src="{{url('gelr/vendors/ladda-button/js/spin.min.js')}}"></script>
-    <script src="{{url('gelr/vendors/ladda-button/js/ladda.jquery.min.js')}}"></script>
-    <script src="{{url('gelr/vendors/ladda-button/js/ladda.min.js')}}"></script>
+                    }, 20)
+                    alert(" mp4 file just")
+                } else {
+                    $('#__image').html('<video  id="_image"  style="width: 100%"   autoplay loop    ><source src="' + src + '" /> </video>');
+                    setTimeout(function () {
 
 
-    <script src="{{url('gelr/vendors/toastr/js/toastr.min.js')}}"></script>
-    <!-- Toastr Init -->
-    <script src="{{url('gelr/js/init/toastr.js')}}"></script>
-    <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
-    <script src="script.js"></script>
-    <!-- Ladda Button init Js -->
-    <script>
-        $('.selectpicker').selectpicker();
+                        $('#holder img').attr('src', "{{url('video.png')}}");
 
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-        String.prototype.replaceAll = function (search, replacement) {
-            var target = this;
-            return target.replace(new RegExp(search, 'g'), replacement);
-        };
-
-
-        jQuery(document).ready(function () {
-
-            $("#thumbnail").on("change", function (t) {
-
-                    var src = $(this).val();
-                    var extension = src.substr((src.lastIndexOf('.') + 1));
-
-                    if (extension != 'mp4') {
-
-
-                        setTimeout(function () {
-                            $('#holder img').attr('src', "{{url('images/cover.jpg')}}");
-
-
-                        }, 20)
-                        alert(" mp4 file just")
-                    } else {
-                        $('#__image').html('<video  id="_image"  style="width: 100%"   autoplay loop    ><source src="'+src+'" /> </video>');
-                        setTimeout(function () {
-
-
-                            $('#holder img').attr('src', "{{url('video.png')}}");
-
-                        }, 500)
-                    }
+                    }, 500)
                 }
-            );
-            $("#caption").on("keyup", function (t) {
+            }
+        );
+        $("#caption").on("keyup", function (t) {
 
 
-                var tags = $('#tags').val();
+            var tags = $('#tags').val();
 
-                $('#_caption').html('<span>' + $(this).val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', "#") + '</span>');
-
-
-            });
-
-            jQuery(document).on('change', "#tags", function (e) {
+            $('#_caption').html('<span>' + $(this).val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', "#") + '</span>');
 
 
-                var tags = $(this).val();
+        });
 
-                $('#_caption').html('<span>' + $('#caption').val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', " #") + '</span>');
-
-                e.preventDefault();
-            });
+        jQuery(document).on('change', "#tags", function (e) {
 
 
-            $("#new_post_btn").on("click", function (t) {
+            var tags = $(this).val();
 
-                var e = t.currentTarget,
-                    a = Ladda.create(e);
+            $('#_caption').html('<span>' + $('#caption').val() + '</span>' + " " + '<span class="text-danger">' + tags.replaceAll(',', " #") + '</span>');
 
-                a.start();
-
-                $.ajax({
-                    url: 'create',
-                    method: 'POST',
-                    data: $('#new_post').serialize(),
-                    success: function (data, textStatus, jqXHR) {
-                        if (textStatus === 'success') {
-                            toastr.success(data.status + "اطلاعات با موفقیت ثبت شد", "", {
-                                progressBar: !0
-                            });
-
-
-                            $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
-                            $('#new_post')[0].reset();
-                            $('#__image').html('');
-                            $('.filter-option-inner-inner').html('');
-                            $('#holder').html('<img src="{{url('images/cover.jpg')}}" width="150px" alt="Image" class="img-responsive">');
-                            $("#tags").tagsinput('removeAll');
-                        }
-
-
-                    },
-                    error: function (error) {
-
-                        if (error.status === 422) {
-                            var errors = $.parseJSON(error.responseText);
-                            $.each(errors.errors, function (key, val) {
-
-                                toastr.error(val[0], "خطا", {
-                                    progressBar: !0
-                                });
-                            });
-                        } else {
-
-                            console.log(error.responseText)
-                            toastr.error("خطا در ثبت اطلاعات", "خطا ", {
-                                progressBar: !0
-                            });
-                        }
-
-
-                    },
-
-                    complete: function () {
-                        a.stop();
-                    }
-
-                });
-
-
-            })
+            e.preventDefault();
         });
 
 
-    </script>
+        $("#new_post_btn").on("click", function (t) {
 
+            var e = t.currentTarget,
+                a = Ladda.create(e);
 
-    <script>
-                {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
-        var route_prefix = "{{ url('laravel-filemanager') }}";
+            a.start();
 
-
-        $('#lfm2').filemanager('file', {prefix: route_prefix});
-
-        $(document).ready(function () {
-
-            // Define function to open filemanager window
-            var lfm = function (options, cb) {
-                var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-                window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
-                window.SetUrl = cb;
-            };
-
-            // Define LFM summernote button
-            var LFMButton = function (context) {
-                var ui = $.summernote.ui;
-                var button = ui.button({
-                    contents: '<i class="note-icon-picture"></i> ',
-                    tooltip: 'Insert image with filemanager',
-                    click: function () {
-
-                        lfm({type: 'image', prefix: '/laravel-filemanager'}, function (lfmItems, path) {
-                            lfmItems.forEach(function (lfmItem) {
-                                context.invoke('insertImage', lfmItem.url);
-                            });
+            $.ajax({
+                url: 'create',
+                method: 'POST',
+                data: $('#new_post').serialize(),
+                success: function (data, textStatus, jqXHR) {
+                    if (textStatus === 'success') {
+                        toastr.success(  "اطلاعات با موفقیت ثبت شد", "", {
+                            progressBar: !0
                         });
 
+
+                        $("#form_image_preview img").attr("src", "{{url('images/cover.jpg')}}")
+                        $('#new_post')[0].reset();
+                        $('#__image').html('');
+                        $('.filter-option-inner-inner').html('');
+                        $('#holder').html('<img src="{{url('images/cover.jpg')}}" width="150px" alt="Image" class="img-responsive">');
+                        $("#tags").tagsinput('removeAll');
                     }
-                });
-                return button.render();
-            };
 
-            // Initialize summernote with LFM button in the popover button group
-            // Please note that you can add this button to any other button group you'd like
-            $('#summernote-editor').summernote({
-                toolbar: [
-                    ['popovers', ['lfm']],
-                ],
-                buttons: {
-                    lfm: LFMButton
+
+                },
+                error: function (error) {
+
+                    if (error.status === 422) {
+                        var errors = $.parseJSON(error.responseText);
+                        $.each(errors.errors, function (key, val) {
+
+                            toastr.error(val[0], "خطا", {
+                                progressBar: !0
+                            });
+                        });
+                    } else {
+
+                        console.log(error.responseText)
+                        toastr.error("خطا در ثبت اطلاعات", "خطا ", {
+                            progressBar: !0
+                        });
+                    }
+
+
+                },
+
+                complete: function () {
+                    a.stop();
                 }
-            })
-        });
 
-    </script>
+            });
 
 
-@endsection
+        })
+    });
+
+
+</script>
+<script>
+            {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
+    var route_prefix = "{{ url('laravel-filemanager') }}";
+
+
+    $('#lfm2').filemanager('file', {prefix: route_prefix});
+
+    $(document).ready(function () {
+
+        // Define function to open filemanager window
+        var lfm = function (options, cb) {
+            var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+            window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+            window.SetUrl = cb;
+        };
+
+        // Define LFM summernote button
+        var LFMButton = function (context) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+                contents: '<i class="note-icon-picture"></i> ',
+                tooltip: 'Insert image with filemanager',
+                click: function () {
+
+                    lfm({type: 'image', prefix: '/laravel-filemanager'}, function (lfmItems, path) {
+                        lfmItems.forEach(function (lfmItem) {
+                            context.invoke('insertImage', lfmItem.url);
+                        });
+                    });
+
+                }
+            });
+            return button.render();
+        };
+
+        // Initialize summernote with LFM button in the popover button group
+        // Please note that you can add this button to any other button group you'd like
+        $('#summernote-editor').summernote({
+            toolbar: [
+                ['popovers', ['lfm']],
+            ],
+            buttons: {
+                lfm: LFMButton
+            }
+        })
+    });
+
+</script>

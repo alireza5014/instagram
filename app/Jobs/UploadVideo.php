@@ -24,11 +24,7 @@ class UploadVideo implements ShouldQueue
 
         //https://ffbinaries.com/downloads
         $this->post=$post;
-//
-
-
-//        \InstagramAPI\Utils::$ffprobeBin = public_path('FFmpeg/bin/ffprobe.exe');
-    }
+  }
 
 
     /**
@@ -47,7 +43,7 @@ class UploadVideo implements ShouldQueue
 
         $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
 
-        $videoFilename =public_path($this->post->medias[0]->file);
+         $videoFilename =public_path(str_replace('http://localhost/instagram/public','',$post->media->file));
 
 //////////////////////
         $ig = new \InstagramAPI\Instagram(true,true);

@@ -10,6 +10,7 @@ use App\Http\Requests\PostRequest;
 use App\Http\Requests\UploadVideoRequest;
 use App\Jobs\UploadAlbum;
 use App\Jobs\UploadPhoto;
+use App\Jobs\UploadStory;
 use App\Jobs\UploadVideo;
 use App\Model\Media;
 use App\Model\Account;
@@ -57,12 +58,14 @@ class PostController extends Controller
         $categories = Category::get();
         $accounts = Account::where('user_id', getUser('id'))->get();
         $types = ['photo', 'album', 'video', 'story', 'live'];
-        $view = 'user.post.new.photo';
-        if (in_array($type, $types)) {
-            $view = 'user.post.new.' . $type;
+
+
+
+        if (!in_array($type, $types)) {
+            $type =  "photo";
         }
 
-        return view($view, compact('categories', 'accounts'));
+        return view('user.post.create', compact('categories', 'accounts','type'));
 
 
     }
@@ -89,28 +92,27 @@ class PostController extends Controller
 
         $send_at = Carbon::now()->addMinute($request->sent_at);
         $filepath = explode(',', $request->filepath);
-        if (sizeof($filepath) > 1) {
-            $this->create_album(1,$filepath,$send_at,$request);
 
-        } else {
-            $this->create_photo(2,$filepath,$send_at, $request);
+        $types = ['photo', 'album', 'video', 'story', 'live'];
+
+        $category_id = array_search($type, $types) + 1;
+        switch ($type) {
+            case "photo":
+                $this->create_photo($category_id,$filepath,$send_at, $request);
+                break;
+            case "album":
+                $this->create_album($category_id,$filepath,$send_at,$request);
+                break;
+            case "video":
+                $this->create_video($category_id,$filepath,$send_at, $request);
+                break;
+            case "story":
+                $this->create_story($category_id,$filepath,$send_at, $request);
+                break;
+
+
 
         }
-
-//        $types = ['photo', 'album', 'video', 'story', 'live'];
-
-//        $category_id = array_search($type, $types) + 1;
-//        switch ($type) {
-//            case "photo":
-//                $this->create_photo($category_id, $request);
-//                break;
-//
-//            case "album":
-//                $this->create_album($category_id, $request);
-//                break;
-//
-//
-//        }
     }
 
     private function create_photo($category_id,$filepath,$sent_at, $request)
@@ -145,7 +147,7 @@ class PostController extends Controller
                 }])->with('account')->first();
 
 
-                UploadPhoto::dispatch($posts[$i])->delay(now()->addSecond($request->sent_at));;
+                UploadPhoto::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
 
             }
 
@@ -160,8 +162,7 @@ class PostController extends Controller
 
     }
 
-
-    public function create_video(UploadVideoRequest $request)
+    public function create_video($category_id,$filepath,$sent_at, $request)
     {
 
 
@@ -179,50 +180,38 @@ class PostController extends Controller
                 'message' => 'Image uploaded unsuccessfully',
             );
         }
-
 //        return response()->json($output);
-
         try {
 
-
             $accounts = $request->accounts;
-
             for ($i = 0; $i < sizeof($accounts); $i++) {
                 $post = Post::create([
 
-                    'category_id' => 3,
+                    'category_id' => $category_id,
                     'user_id' => getUser('id'),
                     'account_id' => $accounts[$i],
                     'tags' => $request->tags,
-                    'sent_at' => $request->sent_at,
+                    'sent_at' => $sent_at,
                     'caption' => $request->caption,
                 ]);
 
-
-                $media = new Media;
-                $media->file = "videos/" . $video_name;
-                $media->type = "video";
-
-
+                    $media = new Media;
+                    $media->file = $filepath[0];
+                    $media->type = "video";
                 $post->medias()->save(
                     $media
                 );
 
-
-                $posts[$i] = Post::where('id', $post->id)->with(['medias' => function ($q) {
+                $posts[$i] = Post::where('id', $post->id)->with(['media' => function ($q) {
                     return $q->select('post_id', 'type', 'file');
                 }])->with('account')->first();
-                UploadVideo::dispatch($posts[$i])->delay(now()->addSecond(10));;
-
+               UploadVideo::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
+//                UploadStory::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
             }
-
 
         } catch (Exception $exception) {
             return response()->json(['status' => 0, 'message' => $exception->getMessage()]);
-
         }
-
-
         return response()->json(['status' => 1, 'message' => 'با موفقیت ثبت شد']);
 
 
@@ -251,9 +240,13 @@ class PostController extends Controller
                 $medias = [];
 
                 for ($j = 0; $j < sizeof($filepath); $j++) {
+
+                    $path_info = pathinfo($filepath[$j]);
+                    ( $path_info['extension']=='mp4') ? $type='video' : $type='photo';
+
                     $media = new Media;
                     $media->file = $filepath[$j];
-                    $media->type = "photo";
+                    $media->type =$type;
                     $medias[] = $media;
 
 
@@ -266,7 +259,7 @@ class PostController extends Controller
                 $posts[$i] = Post::where('id', $post->id)->with(['medias' => function ($q) {
                     return $q->select('post_id', 'type', 'file');
                 }])->with('account')->first();
-                UploadAlbum::dispatch($posts[$i])->delay(now()->addSecond(10));;
+                UploadAlbum::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
 
             }
 
@@ -280,6 +273,65 @@ class PostController extends Controller
 
 
     }
+
+    private function create_story($category_id,$filepath,$sent_at, $request)
+    {
+
+
+        try {
+
+
+
+            $accounts = $request->accounts;
+
+            for ($i = 0; $i < sizeof($accounts); $i++) {
+                $post = Post::create([
+                    'category_id' => $category_id,
+                    'user_id' => getUser('id'),
+                    'account_id' => $accounts[$i],
+                    'tags' => $request->tags,
+                    'sent_at' => $sent_at,
+                    'caption' => $request->caption,
+                ]);
+
+                $medias = [];
+
+                for ($j = 0; $j < sizeof($filepath); $j++) {
+
+                    $path_info = pathinfo($filepath[$j]);
+                    ( $path_info['extension']=='mp4') ? $type='video' : $type='photo';
+
+                    $media = new Media;
+                    $media->file = $filepath[$j];
+                    $media->type =$type;
+                    $medias[] = $media;
+
+
+                }
+                $post->medias()->saveMany(
+                    $medias
+                );
+
+
+                $posts[$i] = Post::where('id', $post->id)->with(['medias' => function ($q) {
+                    return $q->select('post_id', 'type', 'file');
+                }])->with('account')->first();
+                UploadStory::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
+
+            }
+
+
+        } catch (Exception $exception) {
+            return response()->json(['status' => 0, 'message' => $exception->getMessage()]);
+
+        }
+
+        return response()->json(['status' => 1, 'message' => 'با موفقیت ثبت شد']);
+
+
+    }
+
+
 
     public function modify(PostModifyRequest $request)
     {

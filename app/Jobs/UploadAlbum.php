@@ -51,11 +51,11 @@ class UploadAlbum implements ShouldQueue
 
             $my_media[] = [
                 'type' => $media->type,
-                'file' => public_path(str_replace('http://localhost/instagram/public','',$media->file))
+                'file' => public_path(str_replace('http://localhost/instagram/public', '', $media->file))
             ];
 
         }
-        $ig = new \InstagramAPI\Instagram(true, true);
+         $ig = new \InstagramAPI\Instagram(true, true);
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {

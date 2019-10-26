@@ -11,7 +11,8 @@
 
       <?php
         $current_size=getFolderSize(public_path('my-files/files/'.getUser('id')));
-        $total_size=500;
+      $current_size=getFolderSize();
+      $total_size=getUser('disk_size');
         $percent_usage=$current_size/$total_size*100;
       ?>
       <p dir="ltr">{{$current_size}} Mb (Max : {{$total_size}} Mb)</p>
