@@ -25,7 +25,7 @@
                             <input class="form-control" name="username" id="username">
                         </div>
                         <div class="form-group">
-                            <label for="password"> زمر ورود اینستاگرام</label>
+                            <label for="password"> رمز ورود اینستاگرام</label>
 
                             <input class="form-control" type="password" name="password" id="password">
                         </div>
@@ -48,10 +48,10 @@
                 <div class="card">
                     <div class="card-body" style="min-height: 60vh">
                         <button type="button" class="btn btn-primary btn-flat mt-2" data-toggle="modal"
-                                data-target="#new_account_modal"> افزودن حساب کاربری جدید
+                                data-target="#new_account_modal"> افزودن حساب کاربری اینستاگرام
                         </button>
 
-                        <h4 class="card_title"> List Accounts</h4>
+
                         <div id="table" class="row">
 
                             @include('user.account.table')

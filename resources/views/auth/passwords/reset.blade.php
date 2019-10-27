@@ -1,65 +1,114 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<!doctype html>
+<html lang="zxx">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+@include('layouts.head')
 
-                        <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+<body>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+<div class="limiter">
+    <div class="container-login100">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+        <div class="wrap-login100">
+            {{--<form class="login100-form validate-form">--}}
+
+
+            <form method="POST" class="login100-form validate-form" action="{{ route('password.update') }}">
+                @csrf
+
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                <div class="login-form-body text-center p-4">
+
+                    {{--<img src="{{url('gelr/images/logo-login.svg')}}" class="mb-5" alt="Logo">--}}
+
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+
+                    <div class="form-gp">
+                        <label for="email">آدرس ایمیل</label>
+                        <input  value="{{ $email ?? old('email') }}"type="text" name="email" id="email">
+                        <i class="ti-email"></i>
+
+                    </div>
+
+                    <div class="form-gp">
+                        <label for="password">رمز عبور</label>
+                        <input name="password" type="password" id="password">
+                        <i class="ti-lock"></i>
+                    </div>
+
+
+                    <div class="form-gp">
+                        <label for="password-confirm">تایید رمز عبور</label>
+                        <input name="password_confirmation" type="password" id="password-confirm" autocomplete="new-password">
+                        <i class="ti-lock"></i>
+                    </div>
+
+
+                    <div class="row mb-4 rmber-area">
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox primary-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">مرا به خاطر
+                                    بسپار</label>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="col-6 text-right">
+                            <a href="#" class="text-primary">رمز عبور را فراموش کردید؟</a>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="submit-btn-area">
+                        <button id="form_submit" type="submit" class="btn btn-primary">تغییر رمز عیور <i
+                                    class="ti-arrow-right"></i></button>
+                    </div>
+                    <div class="form-footer text-center mt-5">
+                        <p class="text-muted">حساب کاربری دارید؟ <a href="{{route('login')}}" class="text-primary"> ورود
+                                به حساب کاربری</a></p>
+                    </div>
                 </div>
+
+            </form>
+
+            <div class="login100-more" style="background-image: url('{{url('gelr/images/bg-reg.jpg')}}');">
+
+
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+
+<!--=========================*
+            Scripts
+*===========================-->
+
+@include('layouts.foot')
+
+<!-- This Page Js -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $('.form-gp input').on('focus', function () {
+            $(this).parent('.form-gp').addClass('focused');
+        });
+        $('.form-gp input').on('focusout', function () {
+            if ($(this).val().length === 0) {
+                $(this).parent('.form-gp').removeClass('focused');
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

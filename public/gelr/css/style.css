@@ -1,4 +1,4 @@
-@font-face {
+.vz_main_header.top_nav@font-face {
 font-family: "aviny";
 src: url('../fonts/aviny.ttf') format('truetype');
 }
@@ -249,7 +249,7 @@ button {
   letter-spacing: 0; }
 
 .vz_main_content {
-  margin-top: 100px;
+  margin-top: 80px;
   padding: 40px 30px; }
 
 .vz_main_container {
@@ -883,7 +883,7 @@ blockquote {
   background: #fff; }
   .vz_main_header.top_nav {
     background: #fff;
-    height: 100px;
+    height: 80px;
     z-index: 1111;
     position: fixed;
     top: 0; }
@@ -1030,7 +1030,7 @@ blockquote {
   transition: all 0.3s ease-in-out;
   /*width: 140px;*/
   height: 100vh;
-  top: 100px;
+  top: 80px;
   background: #fff;
   color: #4a4a4a;
   border-left: 1px solid #e0e6f5; }
@@ -7162,7 +7162,7 @@ figure.portfolio_item.hover .curl {
   background: white;
 }
 .modal{
-  top:150px !important;
+  top:80px !important;
 }
 #nav a, #fab a{
   margin-right: 20px !important;

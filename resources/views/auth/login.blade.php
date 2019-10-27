@@ -39,7 +39,7 @@
                         <button id="form_submit" type="submit" class="btn btn-primary">تایید <i class="ti-arrow-right"></i></button>
                     </div>
                     <div class="form-footer text-center mt-5">
-                        <p class="text-muted">حساب کاربری ندارید؟ <a href="register.html" class="text-primary">ثبت نام</a></p>
+                        <p class="text-muted">حساب کاربری ندارید؟ <a href="{{route('register')}}" class="text-primary">ثبت نام</a></p>
                     </div>
                 </div>
 
