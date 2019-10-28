@@ -101,7 +101,7 @@ class UploadStory implements ShouldQueue
             //
             // Also note that it has lots of options, so read its class documentation!
             foreach ($post->medias as $item) {
-                $photoFilename=  public_path(str_replace('http://localhost/instagram/public', '', $item->file));
+                $photoFilename=  getFilePath($item->file);
                 if ($item->type == 'video') {
                     $photo = new \InstagramAPI\Media\Video\InstagramVideo($photoFilename, ['targetFeed' => \InstagramAPI\Constants::FEED_STORY]);
                     $ig->story->uploadVideo($photo->getFile(), $metadata);

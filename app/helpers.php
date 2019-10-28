@@ -2,6 +2,12 @@
 use InstagramAPI\Media\Video\FFmpeg;
 use Illuminate\Support\Facades\File;
 
+function getFilePath($file){
+
+
+    $url=env('APP_URL','http://localhost/instagram/public');
+   return public_path(str_replace($url, '', $file));
+}
 function getUser($key)
 {
      if (auth('user')->check()) {

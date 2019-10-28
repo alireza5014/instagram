@@ -4,8 +4,8 @@
                           Logo
             *===========================-->
         <div class="text-center rt_nav_wrapper d-flex align-items-center">
-            <a class="nav_logo rt_logo" href="index.html"><img src="{{url('gelr/images/logo.png')}}" alt="logo"/></a>
-            <a class="nav_logo nav_logo_mob" href="index.html"><img src="{{url('gelr/images/mobile-logo.png')}}" alt="logo"/></a>
+            <a class="nav_logo rt_logo" href=""><img src="{{url('gelr/images/logo.png')}}" alt="logo"/></a>
+            <a class="nav_logo nav_logo_mob" href=""><img src="{{url('gelr/images/mobile-logo.png')}}" alt="logo"/></a>
 
         </div>
         <!--=========================*

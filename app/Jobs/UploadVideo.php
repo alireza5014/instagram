@@ -43,7 +43,7 @@ class UploadVideo implements ShouldQueue
 
         $captionText = $post->caption . " " . str_replace(',', ' #', $post->tags);
 
-         $videoFilename =public_path(str_replace('http://localhost/instagram/public','',$post->media->file));
+         $videoFilename =getFilePath($post->media->file);
 
 //////////////////////
         $ig = new \InstagramAPI\Instagram(true,true);

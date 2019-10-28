@@ -51,7 +51,7 @@ class UploadAlbum implements ShouldQueue
 
             $my_media[] = [
                 'type' => $media->type,
-                'file' => public_path(str_replace('http://localhost/instagram/public', '', $media->file))
+                'file' =>getFilePath($media->file)
             ];
 
         }
