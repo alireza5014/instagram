@@ -1202,6 +1202,8 @@ blockquote {
     font-size: 13px !important;
     padding: 9px 5px !important;
 
+
+
   }
 
 
@@ -1348,10 +1350,10 @@ blockquote {
         width: 4px;
         height: 100%; }
     .vz_main_sec .vz_navbar .sidebar li a {
-      font-size: 22px;
-      padding: 20px 29px;
+      font-size: 18px;
+      padding: 13px 15px;
       position: relative;
-      cursor: pointer; }
+      cursor: pointer;}
       .vz_main_sec .vz_navbar .sidebar li a:after {
         content: "";
         position: absolute;
@@ -1822,7 +1824,7 @@ blockquote {
         color: #5e5e5e; }
       .top_nav .rt_nav_wrapper .nav_logo img {
         max-width: 100%;
-        height: 30px;
+        height: 80px;
         margin: auto;
         vertical-align: middle; }
     .top_nav .rt_nav_wrapper .nav_logo_mob {

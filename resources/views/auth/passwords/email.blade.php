@@ -3,10 +3,13 @@
 <!doctype html>
 <html lang="zxx">
 
-@include('layouts.head')
+<head>
+    @include('layouts.head')
+    <title>بازیابی رمز عبور</title>
 
+</head>
 
-<body>
+ <body>
 
 <div class="limiter">
     <div class="container-login100">

@@ -99,7 +99,7 @@ return [
 
     'should_validate_size'     => false,
 
-    'should_validate_mime'     => true,
+    'should_validate_mime'     => false,
 
     // permissions to be set when create a new folder or when it creates automatically with thumbnails
     'create_folder_mode'       => 0755,

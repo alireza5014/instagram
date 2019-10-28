@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="fa">
 
-@include('layouts.head')
-
+<head>
+    @include('layouts.head')
+<title>ورود به حساب کاربری</title>
+</head>
 <body>
 
 <div class="limiter">
@@ -32,7 +34,7 @@
                             </div>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-primary">رمز عبور را فراموش کردید؟</a>
+                            <a href="{{url('password/reset')}}" class="text-primary">رمز عبور را فراموش کردید؟</a>
                         </div>
                     </div>
                     <div class="submit-btn-area">

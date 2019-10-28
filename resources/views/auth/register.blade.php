@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="zxx">
 
-@include('layouts.head')
-
+<head>
+    @include('layouts.head')
+    <title>ثبت نام </title>
+</head>
 
 <body>
 
@@ -66,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-primary">رمز عبور را فراموش کردید؟</a>
+                            <a href="{{url('password/reset')}}" class="text-primary">رمز عبور را فراموش کردید؟</a>
                         </div>
                     </div>
                     <div class="submit-btn-area">

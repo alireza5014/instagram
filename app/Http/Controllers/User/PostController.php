@@ -20,7 +20,7 @@ use App\Model\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
- use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 class PostController extends Controller
@@ -59,13 +59,39 @@ class PostController extends Controller
         $accounts = Account::where('user_id', getUser('id'))->get();
         $types = ['photo', 'album', 'video', 'story', 'live'];
 
+        $sent_at = [
+            'همین الان' => 0,
+            'یک دقیقه دیگر' => 1,
+            'دو دقیقه دیگر' => 2,
+            'پنج دقیقه دیگر' => 5,
+            'ده دقیقه دیگر' => 10,
+            'بیست دقیقه دیگر' => 20,
+            'سی دقیقه دیگر' => 30,
+            'یک ساعت  دیگر' => 60,
+            'دو ساعت  دیگر' => 120,
+            'پنج ساعت  دیگر' => 300,
+            'هفت ساعت  دیگر' => 420,
+            'ده ساعت  دیگر' => 600,
+            'پانزده ساعت  دیگر' => 900,
+            'بیست ساعت  دیگر' => 1200,
+            'یک روز   دیگر' => 60 * 24,
+            'دو روز   دیگر' => 2 * 60 * 24,
+            'سه روز   دیگر' => 3 * 60 * 24,
+            'چهار روز   دیگر' => 4 * 60 * 24,
+            'پنج روز   دیگر' => 5 * 60 * 24,
+            'شش روز   دیگر' => 6 * 60 * 24,
+            'هفت روز   دیگر' => 7 * 60 * 24,
+            'هشت روز   دیگر' => 8 * 60 * 24,
+            'نه روز   دیگر' => 9 * 60 * 24,
+            'ده روز   دیگر' => 10 * 60 * 24,
 
+        ];
 
         if (!in_array($type, $types)) {
-            $type =  "photo";
+            $type = "photo";
         }
 
-        return view('user.post.create', compact('categories', 'accounts','type'));
+        return view('user.post.create', compact('categories', 'accounts', 'type', 'sent_at'));
 
 
     }
@@ -98,24 +124,23 @@ class PostController extends Controller
         $category_id = array_search($type, $types) + 1;
         switch ($type) {
             case "photo":
-                $this->create_photo($category_id,$filepath,$send_at, $request);
+                $this->create_photo($category_id, $filepath, $send_at, $request);
                 break;
             case "album":
-                $this->create_album($category_id,$filepath,$send_at,$request);
+                $this->create_album($category_id, $filepath, $send_at, $request);
                 break;
             case "video":
-                $this->create_video($category_id,$filepath,$send_at, $request);
+                $this->create_video($category_id, $filepath, $send_at, $request);
                 break;
             case "story":
-                $this->create_story($category_id,$filepath,$send_at, $request);
+                $this->create_story($category_id, $filepath, $send_at, $request);
                 break;
-
 
 
         }
     }
 
-    private function create_photo($category_id,$filepath,$sent_at, $request)
+    private function create_photo($category_id, $filepath, $sent_at, $request)
     {
 
         try {
@@ -162,7 +187,7 @@ class PostController extends Controller
 
     }
 
-    public function create_video($category_id,$filepath,$sent_at, $request)
+    public function create_video($category_id, $filepath, $sent_at, $request)
     {
 
 
@@ -195,9 +220,9 @@ class PostController extends Controller
                     'caption' => $request->caption,
                 ]);
 
-                    $media = new Media;
-                    $media->file = $filepath[0];
-                    $media->type = "video";
+                $media = new Media;
+                $media->file = $filepath[0];
+                $media->type = "video";
                 $post->medias()->save(
                     $media
                 );
@@ -205,7 +230,7 @@ class PostController extends Controller
                 $posts[$i] = Post::where('id', $post->id)->with(['media' => function ($q) {
                     return $q->select('post_id', 'type', 'file');
                 }])->with('account')->first();
-               UploadVideo::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
+                UploadVideo::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
 //                UploadStory::dispatch($posts[$i])->delay(now()->addMinute($request->sent_at));;
             }
 
@@ -217,12 +242,11 @@ class PostController extends Controller
 
     }
 
-    private function create_album($category_id,$filepath,$sent_at, $request)
+    private function create_album($category_id, $filepath, $sent_at, $request)
     {
 
 
         try {
-
 
 
             $accounts = $request->accounts;
@@ -242,11 +266,11 @@ class PostController extends Controller
                 for ($j = 0; $j < sizeof($filepath); $j++) {
 
                     $path_info = pathinfo($filepath[$j]);
-                    ( $path_info['extension']=='mp4') ? $type='video' : $type='photo';
+                    ($path_info['extension'] == 'mp4') ? $type = 'video' : $type = 'photo';
 
                     $media = new Media;
                     $media->file = $filepath[$j];
-                    $media->type =$type;
+                    $media->type = $type;
                     $medias[] = $media;
 
 
@@ -274,12 +298,11 @@ class PostController extends Controller
 
     }
 
-    private function create_story($category_id,$filepath,$sent_at, $request)
+    private function create_story($category_id, $filepath, $sent_at, $request)
     {
 
 
         try {
-
 
 
             $accounts = $request->accounts;
@@ -299,11 +322,11 @@ class PostController extends Controller
                 for ($j = 0; $j < sizeof($filepath); $j++) {
 
                     $path_info = pathinfo($filepath[$j]);
-                    ( $path_info['extension']=='mp4') ? $type='video' : $type='photo';
+                    ($path_info['extension'] == 'mp4') ? $type = 'video' : $type = 'photo';
 
                     $media = new Media;
                     $media->file = $filepath[$j];
-                    $media->type =$type;
+                    $media->type = $type;
                     $medias[] = $media;
 
 
@@ -330,7 +353,6 @@ class PostController extends Controller
 
 
     }
-
 
 
     public function modify(PostModifyRequest $request)
